@@ -10,12 +10,11 @@ namespace Crawl
         public frmMain()
         {
             InitializeComponent();
-            StaticVal.scheduleMng.AddSchedule(new ScheduleMember(StaticVal.scheduleMng.GetScheduler(), JobBuilder.Create<CheckStatusJob>(), StaticVal.Scron_CheckStatus, nameof(CheckStatusJob)));
         }
 
         private void btnCrawl_Click(object sender, EventArgs e)
         {
-            
+            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0/5 * * * * ?", nameof(CrawlRealtimeJob)).Start();
             //StaticVal.scheduleMng.AddSchedule(new ScheduleMember(StaticVal.scheduleMng.GetScheduler(), JobBuilder.Create<CrawlJobPrev>(), "0 0/5 * * * ?", nameof(CrawlJobPrev)));
         }
     }
