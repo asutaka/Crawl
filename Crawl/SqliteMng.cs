@@ -1,61 +1,93 @@
-﻿using System;
+﻿using Crawl.Model;
+using FastMember;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crawl
 {
     public class SqliteMng
     {
-        static SQLiteConnection CreateConnection()
+        private static SQLiteConnection _conn;
+        private static SQLiteConnection GetConnection()
         {
-
-            SQLiteConnection sqlite_conn;
-            // Create a new database connection:
-            sqlite_conn = new SQLiteConnection("Data Source=database.db; Version = 3; New = True; Compress = True; ");
-            // Open the connection:
             try
             {
-                sqlite_conn.Open();
+                if (_conn != null)
+                {
+                    if (_conn.State != System.Data.ConnectionState.Open)
+                    {
+                        _conn.Open();
+                    }
+                    return _conn;
+                }
+                var conStr = $@"Data Source={Directory.GetCurrentDirectory()}\sqlite.db;";
+                _conn = new SQLiteConnection(conStr);
+                _conn.Open();
             }
             catch (Exception ex)
             {
-
+                NLogLogger.PublishException(ex, $"SqliteMng.GetConnection|EXCEPTION| {ex.Message}");
             }
-            return sqlite_conn;
+            return _conn;
         }
 
-        static void InsertData(SQLiteConnection conn)
+        public static void InsertData(CongTyDTO param)
         {
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable (Col1, Col2) VALUES('Test Text ', 1); ";
-           sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable(Col1, Col2) VALUES('Test1 Text1 ', 2); ";
-           sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable(Col1, Col2) VALUES('Test2 Text2 ', 3); ";
-           sqlite_cmd.ExecuteNonQuery();
-            sqlite_cmd.CommandText = "INSERT INTO SampleTable1(Col1, Col2) VALUES('Test3 Text3 ', 3); ";
-           sqlite_cmd.ExecuteNonQuery();
-
+            var sqlite_cmd = GetConnection().CreateCommand();
+            sqlite_cmd.CommandText = "INSERT INTO CongTy(ID, TenCongTy, TenGiaoDich, LoaiHinhHoatDong, MaSoThue, DiaChi, DaiDienPhapLuat, NgayCapGiayPhep, NgayHoatDong, DienThoaiTruSo, TrangThai, TinhThanh, QuanHuyen, PhuongXa, CreatedDate) " +
+                $"VALUES('{Guid.NewGuid()}', '{param.TenCongTy}', '{param.TenGiaoDich}', '{param.LoaiHinhHoatDong}', '{param.MaSoThue}', '{param.DiaChi}', '{param.DaiDienPhapLuat}', '{param.NgayCapGiayPhep}', '{param.NgayHoatDong}', '{param.DienThoaiTruSo}', '{param.TrangThai}', '{param.TinhThanh}', '{param.QuanHuyen}', '{param.PhuongXa}', '{DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss")}'); ";
+            sqlite_cmd.ExecuteNonQuery();
         }
 
-        static void ReadData(SQLiteConnection conn)
+        public static List<CongTyDTO> GetData()
         {
-            SQLiteDataReader sqlite_datareader;
-            SQLiteCommand sqlite_cmd;
-            sqlite_cmd = conn.CreateCommand();
-            sqlite_cmd.CommandText = "SELECT * FROM CongTy";
-
-            sqlite_datareader = sqlite_cmd.ExecuteReader();
-            while (sqlite_datareader.Read())
+            var lstResult = new List<CongTyDTO>();
+            try
             {
-                string myreader = sqlite_datareader.GetString(0);
-                Console.WriteLine(myreader);
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = "SELECT * FROM CongTy ORDER BY ngayhoatdong DESC";
+                using (var dataReader = sqlite_cmd.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            var newObject = new CongTyDTO();
+                            dataReader.MapDataToObject(newObject);
+                            lstResult.Add(newObject);
+                        }
+                    }
+                }
             }
-            conn.Close();
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.GetData|EXCEPTION| {ex.Message}");
+            }
+            return lstResult;
+        }
+
+        public static bool CheckExist(string MaSoThue)
+        {
+            try
+            {
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = $"SELECT * FROM CongTy WHERE MaSoThue = '{MaSoThue}'";
+                using (var dataReader = sqlite_cmd.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.CheckExist|EXCEPTION| {ex.Message}");
+            }
+            return false;
         }
     }
 }

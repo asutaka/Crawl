@@ -2,7 +2,7 @@
 {
     public class CongTyDTO
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string TenCongTy { get; set; }
         public string TenGiaoDich { get; set; }
         public string LoaiHinhHoatDong { get; set; }
@@ -19,5 +19,6 @@
         public string QuanHuyen { get; set; }
         public string PhuongXa { get; set; }
         public string LinkWeb { get; set; }
+        private string CreatedDate { get; set; }
     }
 }

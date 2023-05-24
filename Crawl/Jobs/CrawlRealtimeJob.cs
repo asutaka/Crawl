@@ -1,11 +1,10 @@
-﻿using HtmlAgilityPack;
+﻿using Crawl.Model;
+using HtmlAgilityPack;
 using OpenQA.Selenium.Chrome;
 using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Crawl.Jobs
 {
@@ -51,35 +50,96 @@ namespace Crawl.Jobs
                     }
                     while (index > 0);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     NLogLogger.PublishException(ex, $"CrawlRealtimeJob.Execute|EXCEPTION| {ex.Message}");
                 }
 
                 foreach (var item in lstLink)
                 {
-                    driver.Navigate().GoToUrl(item);
-                    var doc = new HtmlDocument();
-                    doc.LoadHtml(driver.PageSource);
-                    var nodeTenCongTy = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/h4/a/span");
-                    var nodeLoaiHinhHoatDong = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/text()[1]");
-                    var nodeMaSoThue = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/a");
-                    var nodeDiaChi = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/text()[3]");
-                    var nodeDaiDienPhapLuat = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/text()[4]");
-                    var nodeNgayCap = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/text()[5]");
-                    var nodeNgayHoatDong = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/text()[6]");
-                    var nodeDienThoai = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/img");
-                    var nodeTrangThai = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/text()[9]");
-                }
-                
+                    try
+                    {
+                        var model = new CongTyDTO();
+                        driver.Navigate().GoToUrl(item);
+                        var doc = new HtmlDocument();
+                        doc.LoadHtml(driver.PageSource);
+                        var nodeTenCongTy = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/h4/a/span");
+                        var nodeMaSoThue = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/a");
+                        var nodeDienThoai = doc.DocumentNode.SelectSingleNode($"/html/body/div/div[1]/div[3]/img");
+                        model.TenCongTy = nodeTenCongTy?.InnerText.Replace("&amp;", "&").Trim();
+                        model.MaSoThue = nodeMaSoThue?.InnerText.Trim();
+                        model.DienThoaiTruSo = nodeDienThoai?.Attributes["src"]?.Value.Trim();
 
-                var tmp = 1;
+                        var nodeText = doc.DocumentNode.SelectSingleNode("//*[text()[contains(., 'Tên giao dịch')]]");
+                        if (nodeText != null)
+                        {
+                            var innerText = nodeText.InnerText;
+                            string[] separatingStrings = { "   " };
+                            var strSplit = innerText.Split(separatingStrings, StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var itemSplit in strSplit)
+                            {
+                                if(itemSplit.Contains("Tên giao dịch:"))
+                                {
+                                    model.TenGiaoDich = itemSplit.Replace("Tên giao dịch:", string.Empty).Replace("&amp;","&").Trim();
+                                }
+                                else if (itemSplit.Contains("Loại hình hoạt động:"))
+                                {
+                                    model.LoaiHinhHoatDong = itemSplit.Replace("Loại hình hoạt động:", string.Empty).Trim();
+                                }
+                                else if (itemSplit.Contains("Mã số thuế:") && string.IsNullOrWhiteSpace(model.MaSoThue))
+                                {
+                                    model.MaSoThue = itemSplit.Replace("Mã số thuế:", string.Empty).Trim();
+                                }
+                                else if (itemSplit.Contains("Địa chỉ:"))
+                                {
+                                    model.DiaChi = itemSplit.Replace("Địa chỉ:", string.Empty).Trim();
+                                    if(!string.IsNullOrWhiteSpace(model.DiaChi))
+                                    {
+                                        var strSplitDiaChi = model.DiaChi.Split(',');
+                                        var length = strSplitDiaChi.Length;
+                                        if (length >= 4)
+                                        {
+                                            model.TinhThanh = strSplitDiaChi.Last().Trim();
+                                            model.QuanHuyen = strSplitDiaChi[length - 2].Trim();
+                                            model.PhuongXa = strSplitDiaChi[length - 3].Trim();
+                                        }    
+                                    }    
+                                }
+                                else if (itemSplit.Contains("Đại diện pháp luật:"))
+                                {
+                                    model.DaiDienPhapLuat = itemSplit.Replace("Đại diện pháp luật:", string.Empty).Trim();
+                                }
+                                else if (itemSplit.Contains("Ngày cấp giấy phép:"))
+                                {
+                                    model.NgayCapGiayPhep = itemSplit.Replace("Ngày cấp giấy phép:", string.Empty).Trim();
+                                }
+                                else if (itemSplit.Contains("Ngày hoạt động:"))
+                                {
+                                    model.NgayHoatDong = itemSplit.Replace("Ngày hoạt động:", string.Empty).Trim();
+                                    if(model.NgayHoatDong.Contains("("))
+                                    {
+                                        var index = model.NgayHoatDong.IndexOf("(");
+                                        model.NgayHoatDong = model.NgayHoatDong.Substring(0, index - 1);
+                                    }    
+                                }
+                                else if (itemSplit.Contains("Trạng thái:"))
+                                {
+                                    model.TrangThai = itemSplit.Replace("Trạng thái:", string.Empty).Trim();
+                                }
+                            }
+                        }
+                        //Insert Sqlite
+                        if(!SqliteMng.CheckExist(model.MaSoThue))
+                        {
+                            SqliteMng.InsertData(model);
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        NLogLogger.PublishException(ex, $"CrawlRealtimeJob.Execute|EXCEPTION(Detail)| {ex.Message}");
+                    }
+                }
             }
-            ////using (var client = new WebClient())
-            ////{
-            ////    string htmlCode = client.DownloadString($"https://www.tratencongty.com/?page=1");
-            ////    var tmp = 1;
-            ////}
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using NLog;
+﻿using NLog;
 using System;
 using System.Diagnostics;
 using System.Text;
@@ -9,9 +8,8 @@ namespace Crawl
     public class NLogLogger
     {
         volatile static Logger _log;
-        public static Microsoft.Extensions.Logging.ILogger LoggerDI;
 
-        public static Logger Logger
+        private static Logger Logger
         {
             get
             {
@@ -22,7 +20,7 @@ namespace Crawl
                     {
                         if (LogManager.Configuration != null && LogManager.Configuration.LoggingRules.Count > 0)
                         {
-                            _log = LogManager.GetLogger("fileLogger");
+                            _log = LogManager.GetCurrentClassLogger();
 
                             return _log;
                         }
@@ -58,15 +56,17 @@ namespace Crawl
         }
         public static void PublishException(Exception ex, bool sendmail)
         {
-            ErrorMessage(ex.Message + Environment.NewLine + ex.StackTrace);
+            DebugMessage(ex.Message + Environment.NewLine + ex.StackTrace, sendmail);
+
         }
         public static void PublishException(Exception ex, string logid)
         {
-            ErrorMessage(logid + " " + ex.Message + Environment.NewLine + ex.StackTrace + " Line: " + new StackTrace(ex, true).GetFrame(0).GetFileLineNumber());
+            DebugMessage(logid + " " + ex.Message + Environment.NewLine + ex.StackTrace + " Line: " + new StackTrace(ex, true).GetFrame(0).GetFileLineNumber(), true);
+
         }
         public static void PublishException(Exception ex)
         {
-            LoggerDI.LogError(ex, ex.Message);
+            PublishException(ex, true);
         }
 
         public static void DebugMessage(object o)
@@ -78,12 +78,6 @@ namespace Crawl
         {
             var m = GetCalleeString() + Environment.NewLine + "\t" + message;
             Logger.Info(":\t" + m);
-        }
-
-        public static void ErrorMessage(string message)
-        {
-            var m = Environment.NewLine + "\t" + message;
-            Logger.Error(":\t" + m);
         }
 
         public static void DebugMessage(string message)
