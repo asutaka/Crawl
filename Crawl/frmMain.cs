@@ -17,18 +17,11 @@ namespace Crawl
             InitializeComponent();
         }
 
-        private void btnCrawl_Click(object sender, EventArgs e)
-        {
-            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0/5 * * * * ?", nameof(CrawlRealtimeJob)).Start();
-            //StaticVal.scheduleMng.AddSchedule(new ScheduleMember(StaticVal.scheduleMng.GetScheduler(), JobBuilder.Create<CrawlJobPrev>(), "0 0/5 * * * ?", nameof(CrawlJobPrev)));
-        }
-
         private void frmMain_Load(object sender, EventArgs e)
         {
-            
-            _bkgr.DoWork += bkgrConfig_DoWork;
-            _bkgr.RunWorkerCompleted += bkgrConfig_RunWorkerCompleted;
-            _bkgr.RunWorkerAsync();
+            ReloadData();
+            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0 * * * * ?", nameof(CrawlRealtimeJob)).Start();
+            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlJobPrev>(), "30 * * * * ?", nameof(CrawlJobPrev)).Start();
         }
 
         private void bkgrConfig_DoWork(object sender, DoWorkEventArgs e)
@@ -41,6 +34,20 @@ namespace Crawl
             grid.BeginUpdate();
             grid.DataSource = _lstData;
             grid.EndUpdate();
+            _bkgr.DoWork -= bkgrConfig_DoWork;
+            _bkgr.RunWorkerCompleted -= bkgrConfig_RunWorkerCompleted;
+        }
+
+        private void btnReload_Click(object sender, EventArgs e)
+        {
+            ReloadData();
+        }
+
+        private void ReloadData()
+        {
+            _bkgr.DoWork += bkgrConfig_DoWork;
+            _bkgr.RunWorkerCompleted += bkgrConfig_RunWorkerCompleted;
+            _bkgr.RunWorkerAsync();
         }
     }
 }

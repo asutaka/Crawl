@@ -159,12 +159,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethod.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +168,7 @@
     <Compile Include="Jobs\CrawlJobPrev.cs" />
     <Compile Include="Jobs\CrawlRealtimeJob.cs" />
     <Compile Include="Model\CongTyDTO.cs" />
+    <Compile Include="Model\PageDTO.cs" />
     <Compile Include="NLogLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -183,9 +178,6 @@
     <Compile Include="ScheduleJob\ScheduleMng.cs" />
     <Compile Include="SqliteMng.cs" />
     <Compile Include="StaticVal.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>

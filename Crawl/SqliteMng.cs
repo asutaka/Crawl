@@ -1,10 +1,9 @@
 ﻿using Crawl.Model;
-using FastMember;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Drawing;
 using System.IO;
-using System.Linq;
 
 namespace Crawl
 {
@@ -57,6 +56,7 @@ namespace Crawl
                         {
                             var newObject = new CongTyDTO();
                             dataReader.MapDataToObject(newObject);
+                            newObject.DienThoaiTruSoImg = GetImage(newObject.DienThoaiTruSo);
                             lstResult.Add(newObject);
                         }
                     }
@@ -67,6 +67,26 @@ namespace Crawl
                 NLogLogger.PublishException(ex, $"SqliteMng.GetData|EXCEPTION| {ex.Message}");
             }
             return lstResult;
+            
+            Image GetImage(string url)
+            {
+                try
+                {
+                    byte[] bytes = Convert.FromBase64String(url.Replace("data:image/png;base64,", string.Empty));
+                    Image image;
+                    using (MemoryStream ms = new MemoryStream(bytes))
+                    {
+                        image = Image.FromStream(ms);
+                    }
+
+                    return image;
+                }
+                catch(Exception ex)
+                {
+                    NLogLogger.PublishException(ex, $"SqliteMng.GetImage|EXCEPTION| {ex.Message}");
+                    return null;
+                }
+            }
         }
 
         public static bool CheckExist(string MaSoThue)
@@ -88,6 +108,40 @@ namespace Crawl
                 NLogLogger.PublishException(ex, $"SqliteMng.CheckExist|EXCEPTION| {ex.Message}");
             }
             return false;
+        }
+
+        public static void UpdatePage(PageDTO param)
+        {
+            var sqlite_cmd = GetConnection().CreateCommand();
+            sqlite_cmd.CommandText = $"update PageTbl set pagenum = {param.Page}";
+            sqlite_cmd.ExecuteNonQuery();
+        }
+
+        public static PageDTO GetPage()
+        {
+            var result = new PageDTO();
+            try
+            {
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = "SELECT * FROM PageTbl";
+                using (var dataReader = sqlite_cmd.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            var newObject = new PageDTO();
+                            dataReader.MapDataToObject(newObject);
+                            return newObject;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.GetPage|EXCEPTION| {ex.Message}");
+            }
+            return result;
         }
     }
 }

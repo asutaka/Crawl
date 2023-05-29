@@ -1,4 +1,6 @@
-﻿namespace Crawl.Model
+﻿using System.Drawing;
+
+namespace Crawl.Model
 {
     public class CongTyDTO
     {
@@ -19,6 +21,7 @@
         public string QuanHuyen { get; set; }
         public string PhuongXa { get; set; }
         public string LinkWeb { get; set; }
-        private string CreatedDate { get; set; }
+        public Image DienThoaiTruSoImg { get; set; }
+        public string CreatedDate { get; set; }
     }
 }

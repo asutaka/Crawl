@@ -29,6 +29,7 @@ namespace Crawl
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.grid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.TenCongTy = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -39,18 +40,15 @@ namespace Crawl
             this.QuanHuyen = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TinhThanh = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DaiDienPhapLuat = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.DienThoaiTruSoImg = new DevExpress.XtraGrid.Columns.GridColumn();
             this.NgayCapGiayPhep = new DevExpress.XtraGrid.Columns.GridColumn();
             this.NgayHoatDong = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.DienThoaiTruSo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TrangThai = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
-            this.btnExport = new DevExpress.XtraEditors.SimpleButton();
-            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.btnReload = new DevExpress.XtraEditors.SimpleButton();
+            this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
-            this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
             this.SuspendLayout();
             // 
             // grid
@@ -58,10 +56,10 @@ namespace Crawl
             this.grid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.grid.Location = new System.Drawing.Point(0, 83);
+            this.grid.Location = new System.Drawing.Point(4, 41);
             this.grid.MainView = this.gridView1;
             this.grid.Name = "grid";
-            this.grid.Size = new System.Drawing.Size(983, 396);
+            this.grid.Size = new System.Drawing.Size(983, 438);
             this.grid.TabIndex = 0;
             this.grid.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -77,9 +75,9 @@ namespace Crawl
             this.QuanHuyen,
             this.TinhThanh,
             this.DaiDienPhapLuat,
+            this.DienThoaiTruSoImg,
             this.NgayCapGiayPhep,
             this.NgayHoatDong,
-            this.DienThoaiTruSo,
             this.TrangThai});
             this.gridView1.GridControl = this.grid;
             this.gridView1.Name = "gridView1";
@@ -125,8 +123,6 @@ namespace Crawl
             this.MaSoThue.MaxWidth = 90;
             this.MaSoThue.MinWidth = 90;
             this.MaSoThue.Name = "MaSoThue";
-            this.MaSoThue.Visible = true;
-            this.MaSoThue.VisibleIndex = 2;
             this.MaSoThue.Width = 90;
             // 
             // DiaChi
@@ -138,7 +134,7 @@ namespace Crawl
             this.DiaChi.FieldName = "DiaChi";
             this.DiaChi.Name = "DiaChi";
             this.DiaChi.Visible = true;
-            this.DiaChi.VisibleIndex = 3;
+            this.DiaChi.VisibleIndex = 2;
             // 
             // PhuongXa
             // 
@@ -149,7 +145,7 @@ namespace Crawl
             this.PhuongXa.FieldName = "PhuongXa";
             this.PhuongXa.Name = "PhuongXa";
             this.PhuongXa.Visible = true;
-            this.PhuongXa.VisibleIndex = 4;
+            this.PhuongXa.VisibleIndex = 3;
             // 
             // QuanHuyen
             // 
@@ -160,7 +156,7 @@ namespace Crawl
             this.QuanHuyen.FieldName = "QuanHuyen";
             this.QuanHuyen.Name = "QuanHuyen";
             this.QuanHuyen.Visible = true;
-            this.QuanHuyen.VisibleIndex = 5;
+            this.QuanHuyen.VisibleIndex = 4;
             // 
             // TinhThanh
             // 
@@ -171,7 +167,7 @@ namespace Crawl
             this.TinhThanh.FieldName = "TinhThanh";
             this.TinhThanh.Name = "TinhThanh";
             this.TinhThanh.Visible = true;
-            this.TinhThanh.VisibleIndex = 6;
+            this.TinhThanh.VisibleIndex = 5;
             // 
             // DaiDienPhapLuat
             // 
@@ -182,7 +178,18 @@ namespace Crawl
             this.DaiDienPhapLuat.FieldName = "DaiDienPhapLuat";
             this.DaiDienPhapLuat.Name = "DaiDienPhapLuat";
             this.DaiDienPhapLuat.Visible = true;
-            this.DaiDienPhapLuat.VisibleIndex = 7;
+            this.DaiDienPhapLuat.VisibleIndex = 6;
+            // 
+            // DienThoaiTruSoImg
+            // 
+            this.DienThoaiTruSoImg.AppearanceHeader.Options.UseTextOptions = true;
+            this.DienThoaiTruSoImg.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.DienThoaiTruSoImg.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.DienThoaiTruSoImg.Caption = "Điện Thoại";
+            this.DienThoaiTruSoImg.FieldName = "DienThoaiTruSoImg";
+            this.DienThoaiTruSoImg.Name = "DienThoaiTruSoImg";
+            this.DienThoaiTruSoImg.Visible = true;
+            this.DienThoaiTruSoImg.VisibleIndex = 9;
             // 
             // NgayCapGiayPhep
             // 
@@ -198,7 +205,7 @@ namespace Crawl
             this.NgayCapGiayPhep.MinWidth = 80;
             this.NgayCapGiayPhep.Name = "NgayCapGiayPhep";
             this.NgayCapGiayPhep.Visible = true;
-            this.NgayCapGiayPhep.VisibleIndex = 8;
+            this.NgayCapGiayPhep.VisibleIndex = 7;
             this.NgayCapGiayPhep.Width = 80;
             // 
             // NgayHoatDong
@@ -215,19 +222,8 @@ namespace Crawl
             this.NgayHoatDong.MinWidth = 80;
             this.NgayHoatDong.Name = "NgayHoatDong";
             this.NgayHoatDong.Visible = true;
-            this.NgayHoatDong.VisibleIndex = 9;
+            this.NgayHoatDong.VisibleIndex = 8;
             this.NgayHoatDong.Width = 80;
-            // 
-            // DienThoaiTruSo
-            // 
-            this.DienThoaiTruSo.AppearanceHeader.Options.UseTextOptions = true;
-            this.DienThoaiTruSo.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.DienThoaiTruSo.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.DienThoaiTruSo.Caption = "Điện Thoại";
-            this.DienThoaiTruSo.FieldName = "DienThoaiTruSo";
-            this.DienThoaiTruSo.Name = "DienThoaiTruSo";
-            this.DienThoaiTruSo.Visible = true;
-            this.DienThoaiTruSo.VisibleIndex = 10;
             // 
             // TrangThai
             // 
@@ -243,59 +239,31 @@ namespace Crawl
             this.TrangThai.MinWidth = 90;
             this.TrangThai.Name = "TrangThai";
             this.TrangThai.Visible = true;
-            this.TrangThai.VisibleIndex = 11;
+            this.TrangThai.VisibleIndex = 10;
             this.TrangThai.Width = 90;
-            // 
-            // btnCrawl
-            // 
-            this.btnCrawl.Location = new System.Drawing.Point(8, 36);
-            this.btnCrawl.Name = "btnCrawl";
-            this.btnCrawl.Size = new System.Drawing.Size(75, 23);
-            this.btnCrawl.TabIndex = 1;
-            this.btnCrawl.Text = "CRAWL";
-            this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
-            // 
-            // btnExport
-            // 
-            this.btnExport.Location = new System.Drawing.Point(89, 36);
-            this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
-            this.btnExport.TabIndex = 2;
-            this.btnExport.Text = "Export";
-            // 
-            // groupControl1
-            // 
-            this.groupControl1.Controls.Add(this.btnReload);
-            this.groupControl1.Controls.Add(this.btnExport);
-            this.groupControl1.Controls.Add(this.btnCrawl);
-            this.groupControl1.Location = new System.Drawing.Point(0, 1);
-            this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(411, 76);
-            this.groupControl1.TabIndex = 3;
-            this.groupControl1.Text = "Thao tác";
             // 
             // btnReload
             // 
-            this.btnReload.Location = new System.Drawing.Point(170, 36);
+            this.btnReload.Location = new System.Drawing.Point(4, 12);
             this.btnReload.Name = "btnReload";
             this.btnReload.Size = new System.Drawing.Size(75, 23);
             this.btnReload.TabIndex = 3;
             this.btnReload.Text = "Reload";
+            this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 479);
-            this.Controls.Add(this.groupControl1);
+            this.Controls.Add(this.btnReload);
             this.Controls.Add(this.grid);
             this.Name = "frmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.frmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
-            this.groupControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -304,9 +272,6 @@ namespace Crawl
 
         private DevExpress.XtraGrid.GridControl grid;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
-        private DevExpress.XtraEditors.SimpleButton btnCrawl;
-        private DevExpress.XtraEditors.SimpleButton btnExport;
-        private DevExpress.XtraEditors.GroupControl groupControl1;
         private DevExpress.XtraEditors.SimpleButton btnReload;
         private DevExpress.XtraGrid.Columns.GridColumn TenCongTy;
         private DevExpress.XtraGrid.Columns.GridColumn LoaiHinhHoatDong;
@@ -318,7 +283,8 @@ namespace Crawl
         private DevExpress.XtraGrid.Columns.GridColumn DaiDienPhapLuat;
         private DevExpress.XtraGrid.Columns.GridColumn NgayCapGiayPhep;
         private DevExpress.XtraGrid.Columns.GridColumn NgayHoatDong;
-        private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSo;
+        private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSoImg;
         private DevExpress.XtraGrid.Columns.GridColumn TrangThai;
+        private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
     }
 }
