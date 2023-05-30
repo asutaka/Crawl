@@ -26,7 +26,7 @@ namespace Crawl
             ReloadData();
             //new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0/10 * * * * ?", nameof(CrawlRealtimeJob)).Start();
             new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0 * * * * ?", nameof(CrawlRealtimeJob)).Start();
-            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlJobPrev>(), "30 * * * * ?", nameof(CrawlJobPrev)).Start();
+            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob)).Start();
         }
 
         private void bkgrConfig_DoWork(object sender, DoWorkEventArgs e)

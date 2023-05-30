@@ -13,6 +13,11 @@ namespace Crawl.Jobs
     {
         public void Execute(IJobExecutionContext context)
         {
+            Handle("https://www.tratencongty.com/?page=1");
+        }
+        
+        public static void Handle(string url)
+        {
             var options = new ChromeOptions();
             options.AddArguments("headless");
             using (var driver = new ChromeDriver(options))
@@ -20,7 +25,7 @@ namespace Crawl.Jobs
                 var lstLink = new List<string>();
                 try
                 {
-                    driver.Navigate().GoToUrl("https://www.tratencongty.com/?page=1");
+                    driver.Navigate().GoToUrl(url);
                     var doc = new HtmlDocument();
                     doc.LoadHtml(driver.PageSource);
                     var index = 1;
@@ -74,6 +79,10 @@ namespace Crawl.Jobs
                         model.DienThoaiTruSo = nodeDienThoai?.Attributes["src"]?.Value.Trim();
 
                         var nodeText = doc.DocumentNode.SelectSingleNode("//*[text()[contains(., 'Tên giao dịch')]]");
+                        if (nodeText == null)
+                        {
+                            nodeText = doc.DocumentNode.SelectSingleNode("//*[text()[contains(., 'Loại hình hoạt động')]]");
+                        }
                         if (nodeText != null)
                         {
                             var innerText = nodeText.InnerText;
@@ -81,9 +90,9 @@ namespace Crawl.Jobs
                             var strSplit = innerText.Split(separatingStrings, StringSplitOptions.RemoveEmptyEntries);
                             foreach (var itemSplit in strSplit)
                             {
-                                if(itemSplit.Contains("Tên giao dịch:"))
+                                if (itemSplit.Contains("Tên giao dịch:"))
                                 {
-                                    model.TenGiaoDich = itemSplit.Replace("Tên giao dịch:", string.Empty).Replace("&amp;","&").Trim();
+                                    model.TenGiaoDich = itemSplit.Replace("Tên giao dịch:", string.Empty).Replace("&amp;", "&").Trim();
                                 }
                                 else if (itemSplit.Contains("Loại hình hoạt động:"))
                                 {
@@ -96,7 +105,7 @@ namespace Crawl.Jobs
                                 else if (itemSplit.Contains("Địa chỉ:"))
                                 {
                                     model.DiaChi = itemSplit.Replace("Địa chỉ:", string.Empty).Trim();
-                                    if(!string.IsNullOrWhiteSpace(model.DiaChi))
+                                    if (!string.IsNullOrWhiteSpace(model.DiaChi))
                                     {
                                         var strSplitDiaChi = model.DiaChi.Split(',');
                                         var length = strSplitDiaChi.Length;
@@ -105,8 +114,13 @@ namespace Crawl.Jobs
                                             model.TinhThanh = strSplitDiaChi.Last().Trim();
                                             model.QuanHuyen = strSplitDiaChi[length - 2].Trim();
                                             model.PhuongXa = strSplitDiaChi[length - 3].Trim();
-                                        }    
-                                    }    
+                                        }
+                                        else if (length >= 3)
+                                        {
+                                            model.TinhThanh = strSplitDiaChi.Last().Trim();
+                                            model.QuanHuyen = strSplitDiaChi[length - 2].Trim();
+                                        }
+                                    }
                                 }
                                 else if (itemSplit.Contains("Đại diện pháp luật:"))
                                 {
@@ -119,11 +133,11 @@ namespace Crawl.Jobs
                                 else if (itemSplit.Contains("Ngày hoạt động:"))
                                 {
                                     model.NgayHoatDong = itemSplit.Replace("Ngày hoạt động:", string.Empty).Trim();
-                                    if(model.NgayHoatDong.Contains("("))
+                                    if (model.NgayHoatDong.Contains("("))
                                     {
                                         var index = model.NgayHoatDong.IndexOf("(");
                                         model.NgayHoatDong = model.NgayHoatDong.Substring(0, index - 1);
-                                    }    
+                                    }
                                 }
                                 else if (itemSplit.Contains("Trạng thái:"))
                                 {
@@ -132,12 +146,12 @@ namespace Crawl.Jobs
                             }
                         }
                         //Insert Sqlite
-                        if(!SqliteMng.CheckExist(model.MaSoThue))
+                        if (!SqliteMng.CheckExist(model.MaSoThue))
                         {
                             SqliteMng.InsertData(model);
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         NLogLogger.PublishException(ex, $"CrawlRealtimeJob.Execute|EXCEPTION(Detail)| {ex.Message}");
                     }
