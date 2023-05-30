@@ -18,9 +18,8 @@ namespace Crawl.Jobs
         
         public static void Handle(string url)
         {
-            var options = new ChromeOptions();
-            options.AddArguments("headless");
-            using (var driver = new ChromeDriver(options))
+            
+            using (var driver = StaticVal.GetChrome())
             {
                 var lstLink = new List<string>();
                 try

@@ -16,6 +16,8 @@ namespace Crawl
         private BackgroundWorker _bkgr = new BackgroundWorker();
         private List<CongTyDTO> _lstData = new List<CongTyDTO>();
         private int _totalRow = 0;
+        private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0 * * * * ?", nameof(CrawlRealtimeJob));
+        private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob));
         public frmMain()
         {
             InitializeComponent();
@@ -25,8 +27,8 @@ namespace Crawl
         {
             ReloadData();
             //new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0/10 * * * * ?", nameof(CrawlRealtimeJob)).Start();
-            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0 * * * * ?", nameof(CrawlRealtimeJob)).Start();
-            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob)).Start();
+            _RealTimeJob.Start();
+            _PrevJob.Start();
         }
 
         private void bkgrConfig_DoWork(object sender, DoWorkEventArgs e)
@@ -70,6 +72,22 @@ namespace Crawl
                     ProcessStartInfo sInfo = new ProcessStartInfo($"{cellValue}");
                     Process.Start(sInfo);
                 }    
+            }
+        }
+
+        private void frmMain_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            try
+            {
+                ScheduleMng.Instance().StopAllJob();
+                foreach (var process in Process.GetProcessesByName("chromedriver"))
+                {
+                    process.Kill();
+                }
+            }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"frmMain.frmMain_FormClosed|EXCEPTION| {ex.Message}");
             }
         }
     }
