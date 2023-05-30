@@ -21,7 +21,7 @@ namespace Crawl.Jobs
                 var lstLink = new List<string>();
                 try
                 {
-                    driver.Navigate().GoToUrl($"https://www.tratencongty.com/?page={entityPage.Page}");
+                    driver.Navigate().GoToUrl($"https://www.tratencongty.com/?page={entityPage.PageNum}");
                     var doc = new HtmlDocument();
                     doc.LoadHtml(driver.PageSource);
                     var index = 1;
@@ -60,7 +60,10 @@ namespace Crawl.Jobs
                 {
                     try
                     {
-                        var model = new CongTyDTO();
+                        var model = new CongTyDTO
+                        {
+                            LinkWeb = item
+                        };
                         driver.Navigate().GoToUrl(item);
                         var doc = new HtmlDocument();
                         doc.LoadHtml(driver.PageSource);
@@ -141,7 +144,7 @@ namespace Crawl.Jobs
                     }
                 }
             }
-            entityPage.Page = entityPage.Page + 1;
+            entityPage.PageNum = entityPage.PageNum + 1;
             SqliteMng.UpdatePage(entityPage);
         }
     }

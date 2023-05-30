@@ -9,27 +9,54 @@ namespace Crawl
     {
         public static void MapDataToObject<T>(this SQLiteDataReader dataReader, T newObject)
         {
-            if (newObject == null) throw new ArgumentNullException(nameof(newObject));
-
-            // Fast Member Usage
-            var objectMemberAccessor = TypeAccessor.Create(newObject.GetType());
-            var propertiesHashSet =
-                    objectMemberAccessor
-                    .GetMembers()
-                    .Select(mp => mp.Name)
-                    .ToHashSet(StringComparer.InvariantCultureIgnoreCase);
-
-            for (int i = 0; i < dataReader.FieldCount; i++)
+            try
             {
-                var name = propertiesHashSet.FirstOrDefault(a => a.Equals(dataReader.GetName(i), StringComparison.InvariantCultureIgnoreCase));
-                if (!String.IsNullOrEmpty(name))
+                if (newObject == null) throw new ArgumentNullException(nameof(newObject));
+
+                // Fast Member Usage
+                var objectMemberAccessor = TypeAccessor.Create(newObject.GetType());
+                var propertiesHashSet =
+                        objectMemberAccessor
+                        .GetMembers()
+                        .Select(mp => mp.Name)
+                        .ToHashSet(StringComparer.InvariantCultureIgnoreCase);
+
+                for (int i = 0; i < dataReader.FieldCount; i++)
                 {
-                    //Attention! if you are getting errors here, then double check that your model and sql have matching types for the field name.
-                    //Check api.log for error message!
-                    objectMemberAccessor[newObject, name]
-                        = dataReader.IsDBNull(i) ? null : dataReader.GetValue(i);
+                    var name = propertiesHashSet.FirstOrDefault(a => a.Equals(dataReader.GetName(i), StringComparison.InvariantCultureIgnoreCase));
+                    if (!string.IsNullOrWhiteSpace(name))
+                    {
+                        var obj = objectMemberAccessor[newObject, name];
+                        if(obj != null)
+                        {
+                            var type = obj.GetType();
+                            if ("int32".Equals(type.Name, StringComparison.InvariantCultureIgnoreCase))
+                            {
+                                objectMemberAccessor[newObject, name] = dataReader.IsDBNull(i) ? 0 : int.Parse(dataReader.GetValue(i).ToString());
+                            }
+                            else
+                            {
+                                objectMemberAccessor[newObject, name] = dataReader.IsDBNull(i) ? null : dataReader.GetValue(i);
+                            }
+                        }
+                        else
+                        {
+                            objectMemberAccessor[newObject, name] = dataReader.IsDBNull(i) ? null : dataReader.GetValue(i);
+                        }
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"ExtensionMethod.MapDataToObject|EXCEPTION| {ex.Message}");
+            }
+        }
+
+        public static string CheckNull(this string val)
+        {
+            if (string.IsNullOrWhiteSpace(val))
+                return string.Empty;
+            return val.Trim();
         }
     }
 }

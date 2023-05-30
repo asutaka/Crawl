@@ -59,7 +59,10 @@ namespace Crawl.Jobs
                 {
                     try
                     {
-                        var model = new CongTyDTO();
+                        var model = new CongTyDTO
+                        {
+                            LinkWeb = item
+                        };
                         driver.Navigate().GoToUrl(item);
                         var doc = new HtmlDocument();
                         doc.LoadHtml(driver.PageSource);

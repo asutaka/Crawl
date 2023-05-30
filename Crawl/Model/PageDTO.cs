@@ -2,6 +2,6 @@
 {
     public class PageDTO
     {
-        public int Page { get; set; }
+        public int PageNum { get; set; }
     }
 }

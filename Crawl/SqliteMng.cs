@@ -35,10 +35,18 @@ namespace Crawl
 
         public static void InsertData(CongTyDTO param)
         {
-            var sqlite_cmd = GetConnection().CreateCommand();
-            sqlite_cmd.CommandText = "INSERT INTO CongTy(ID, TenCongTy, TenGiaoDich, LoaiHinhHoatDong, MaSoThue, DiaChi, DaiDienPhapLuat, NgayCapGiayPhep, NgayHoatDong, DienThoaiTruSo, TrangThai, TinhThanh, QuanHuyen, PhuongXa, CreatedDate) " +
-                $"VALUES('{Guid.NewGuid()}', '{param.TenCongTy}', '{param.TenGiaoDich}', '{param.LoaiHinhHoatDong}', '{param.MaSoThue}', '{param.DiaChi}', '{param.DaiDienPhapLuat}', '{param.NgayCapGiayPhep}', '{param.NgayHoatDong}', '{param.DienThoaiTruSo}', '{param.TrangThai}', '{param.TinhThanh}', '{param.QuanHuyen}', '{param.PhuongXa}', '{DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss")}'); ";
-            sqlite_cmd.ExecuteNonQuery();
+            var command = "INSERT INTO CongTy(ID, TenCongTy, TenGiaoDich, LoaiHinhHoatDong, MaSoThue, DiaChi, DaiDienPhapLuat, NgayCapGiayPhep, NgayHoatDong, DienThoaiTruSo, TrangThai, TinhThanh, QuanHuyen, PhuongXa, LinkWeb, CreatedDate) " +
+                    $"VALUES('{Guid.NewGuid()}', '{param.TenCongTy.CheckNull().Replace("'", "")}', '{param.TenGiaoDich.CheckNull().Replace("'", "")}', '{param.LoaiHinhHoatDong.CheckNull()}', '{param.MaSoThue.CheckNull()}', '{param.DiaChi.CheckNull().Replace("'", "")}', '{param.DaiDienPhapLuat.CheckNull().Replace("'", "")}', '{param.NgayCapGiayPhep.CheckNull()}', '{param.NgayHoatDong.CheckNull()}', '{param.DienThoaiTruSo.CheckNull()}', '{param.TrangThai.CheckNull()}', '{param.TinhThanh.CheckNull().Replace("'", "")}', '{param.QuanHuyen.CheckNull().Replace("'", "")}', '{param.PhuongXa.CheckNull().Replace("'", "")}', '{param.LinkWeb.CheckNull()}', '{DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm:ss")}'); ";
+            try
+            {
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = command;
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.GetConnection|EXCEPTION|INPUT: {command}| {ex.Message}");
+            }
         }
 
         public static List<CongTyDTO> GetData()
@@ -89,12 +97,40 @@ namespace Crawl
             }
         }
 
-        public static bool CheckExist(string MaSoThue)
+        public static int TotalRow()
         {
+            var command = $"select COUNT(1) as PageNum from CongTy";
             try
             {
                 var sqlite_cmd = GetConnection().CreateCommand();
-                sqlite_cmd.CommandText = $"SELECT * FROM CongTy WHERE MaSoThue = '{MaSoThue}'";
+                sqlite_cmd.CommandText = command;
+                using (var dataReader = sqlite_cmd.ExecuteReader())
+                {
+                    if (dataReader.HasRows)
+                    {
+                        while (dataReader.Read())
+                        {
+                            var newObject = new PageDTO();
+                            dataReader.MapDataToObject(newObject);
+                            return newObject.PageNum;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.CheckExist|EXCEPTION|INPUT: {command}| {ex.Message}");
+            }
+            return 0;
+        }
+
+        public static bool CheckExist(string MaSoThue)
+        {
+            var command = $"SELECT * FROM CongTy WHERE MaSoThue = '{MaSoThue}'";
+            try
+            {
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = command;
                 using (var dataReader = sqlite_cmd.ExecuteReader())
                 {
                     if (dataReader.HasRows)
@@ -105,16 +141,24 @@ namespace Crawl
             }
             catch (Exception ex)
             {
-                NLogLogger.PublishException(ex, $"SqliteMng.CheckExist|EXCEPTION| {ex.Message}");
+                NLogLogger.PublishException(ex, $"SqliteMng.CheckExist|EXCEPTION|INPUT: {command}| {ex.Message}");
             }
             return false;
         }
 
         public static void UpdatePage(PageDTO param)
         {
-            var sqlite_cmd = GetConnection().CreateCommand();
-            sqlite_cmd.CommandText = $"update PageTbl set pagenum = {param.Page}";
-            sqlite_cmd.ExecuteNonQuery();
+            var command = $"update PageTbl set pagenum = {param.PageNum}";
+            try
+            {
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = command;
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.UpdatePage|EXCEPTION|INPUT: {command}| {ex.Message}");
+            }
         }
 
         public static PageDTO GetPage()

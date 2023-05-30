@@ -44,8 +44,11 @@ namespace Crawl
             this.NgayCapGiayPhep = new DevExpress.XtraGrid.Columns.GridColumn();
             this.NgayHoatDong = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TrangThai = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.LinkWeb = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnReload = new DevExpress.XtraEditors.SimpleButton();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.lblTotalRow = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -78,7 +81,8 @@ namespace Crawl
             this.DienThoaiTruSoImg,
             this.NgayCapGiayPhep,
             this.NgayHoatDong,
-            this.TrangThai});
+            this.TrangThai,
+            this.LinkWeb});
             this.gridView1.GridControl = this.grid;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
@@ -87,15 +91,21 @@ namespace Crawl
             this.gridView1.OptionsView.AllowHtmlDrawGroups = false;
             this.gridView1.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.Hidden;
             this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
             // 
             // TenCongTy
             // 
+            this.TenCongTy.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.TenCongTy.AppearanceCell.ForeColor = System.Drawing.Color.Red;
+            this.TenCongTy.AppearanceCell.Options.UseFont = true;
+            this.TenCongTy.AppearanceCell.Options.UseForeColor = true;
             this.TenCongTy.AppearanceHeader.Options.UseTextOptions = true;
             this.TenCongTy.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             this.TenCongTy.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
             this.TenCongTy.Caption = "Công Ty";
             this.TenCongTy.FieldName = "TenCongTy";
             this.TenCongTy.Name = "TenCongTy";
+            this.TenCongTy.OptionsColumn.AllowEdit = false;
             this.TenCongTy.Visible = true;
             this.TenCongTy.VisibleIndex = 0;
             // 
@@ -242,6 +252,12 @@ namespace Crawl
             this.TrangThai.VisibleIndex = 10;
             this.TrangThai.Width = 90;
             // 
+            // LinkWeb
+            // 
+            this.LinkWeb.Caption = "Link";
+            this.LinkWeb.FieldName = "LinkWeb";
+            this.LinkWeb.Name = "LinkWeb";
+            // 
             // btnReload
             // 
             this.btnReload.Location = new System.Drawing.Point(4, 12);
@@ -251,11 +267,34 @@ namespace Crawl
             this.btnReload.Text = "Reload";
             this.btnReload.Click += new System.EventHandler(this.btnReload_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(808, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Tổng số công ty: ";
+            // 
+            // lblTotalRow
+            // 
+            this.lblTotalRow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblTotalRow.AutoSize = true;
+            this.lblTotalRow.ForeColor = System.Drawing.Color.Red;
+            this.lblTotalRow.Location = new System.Drawing.Point(895, 25);
+            this.lblTotalRow.Name = "lblTotalRow";
+            this.lblTotalRow.Size = new System.Drawing.Size(13, 13);
+            this.lblTotalRow.TabIndex = 5;
+            this.lblTotalRow.Text = "0";
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 479);
+            this.Controls.Add(this.lblTotalRow);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnReload);
             this.Controls.Add(this.grid);
             this.Name = "frmMain";
@@ -265,6 +304,7 @@ namespace Crawl
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -286,5 +326,8 @@ namespace Crawl
         private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSoImg;
         private DevExpress.XtraGrid.Columns.GridColumn TrangThai;
         private DevExpress.Utils.Behaviors.BehaviorManager behaviorManager1;
+        private DevExpress.XtraGrid.Columns.GridColumn LinkWeb;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblTotalRow;
     }
 }
