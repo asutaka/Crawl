@@ -13,13 +13,13 @@ namespace Crawl.Jobs
     {
         public void Execute(IJobExecutionContext context)
         {
-            Handle("https://www.tratencongty.com/?page=1");
+            Handle("https://www.tratencongty.com/?page=1", 0);
         }
         
-        public static void Handle(string url)
+        public static void Handle(string url, int mode)
         {
             
-            using (var driver = StaticVal.GetChrome())
+            using (var driver = StaticVal.GetChrome(mode))
             {
                 var lstLink = new List<string>();
                 try
