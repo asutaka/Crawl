@@ -16,7 +16,7 @@ namespace Crawl
         private BackgroundWorker _bkgr = new BackgroundWorker();
         private List<CongTyDTO> _lstData = new List<CongTyDTO>();
         private int _totalRow = 0;
-        private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0 * * * * ?", nameof(CrawlRealtimeJob));
+        private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0 * * * * ?", nameof(CrawlRealtimeJobFake));
         private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob));
         public frmMain()
         {
@@ -26,7 +26,7 @@ namespace Crawl
         private void frmMain_Load(object sender, EventArgs e)
         {
             ReloadData();
-            //new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJob>(), "0/10 * * * * ?", nameof(CrawlRealtimeJob)).Start();
+            //new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0/10 * * * * ?", nameof(CrawlRealtimeJobFake)).Start();
             _RealTimeJob.Start();
             _PrevJob.Start();
         }
@@ -80,10 +80,11 @@ namespace Crawl
             try
             {
                 ScheduleMng.Instance().StopAllJob();
-                foreach (var process in Process.GetProcessesByName("chromedriver"))
+                foreach (var process in Process.GetProcessesByName("chromium"))
                 {
                     process.Kill();
                 }
+                Environment.Exit(0);
             }
             catch(Exception ex)
             {

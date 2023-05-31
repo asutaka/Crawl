@@ -8,7 +8,7 @@ namespace Crawl.Jobs
         public void Execute(IJobExecutionContext context)
         {
             var entityPage = SqliteMng.GetPage();
-            CrawlRealtimeJob.Handle($"https://www.tratencongty.com/?page={entityPage.PageNum}", 1);
+            CrawlRealtimeJobFake.Handle($"https://www.tratencongty.com/?page={entityPage.PageNum}").GetAwaiter().GetResult();
             entityPage.PageNum = entityPage.PageNum + 1;
             SqliteMng.UpdatePage(entityPage);
         }
