@@ -91,5 +91,12 @@ namespace Crawl
                 NLogLogger.PublishException(ex, $"frmMain.frmMain_FormClosed|EXCEPTION| {ex.Message}");
             }
         }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            string path = "export.xlsx";
+            grid.ExportToXlsx(path);
+            Process.Start(path);
+        }
     }
 }

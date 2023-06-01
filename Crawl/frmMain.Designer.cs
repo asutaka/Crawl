@@ -49,6 +49,7 @@ namespace Crawl
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.lblTotalRow = new System.Windows.Forms.Label();
+            this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -288,11 +289,21 @@ namespace Crawl
             this.lblTotalRow.TabIndex = 5;
             this.lblTotalRow.Text = "0";
             // 
+            // btnExport
+            // 
+            this.btnExport.Location = new System.Drawing.Point(85, 12);
+            this.btnExport.Name = "btnExport";
+            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.TabIndex = 6;
+            this.btnExport.Text = "Export";
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 479);
+            this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblTotalRow);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnReload);
@@ -330,5 +341,6 @@ namespace Crawl
         private DevExpress.XtraGrid.Columns.GridColumn LinkWeb;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTotalRow;
+        private DevExpress.XtraEditors.SimpleButton btnExport;
     }
 }
