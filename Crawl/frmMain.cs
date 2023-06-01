@@ -26,9 +26,9 @@ namespace Crawl
         private void frmMain_Load(object sender, EventArgs e)
         {
             ReloadData();
-            //new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0/10 * * * * ?", nameof(CrawlRealtimeJobFake)).Start();
-            _RealTimeJob.Start();
-            _PrevJob.Start();
+            new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlMasoThueJob>(), "0/10 * * * * ?", nameof(CrawlMasoThueJob)).Start();
+            //_RealTimeJob.Start();
+            //_PrevJob.Start();
         }
 
         private void bkgrConfig_DoWork(object sender, DoWorkEventArgs e)

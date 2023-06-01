@@ -177,11 +177,13 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\CrawlMasoThueJob.cs" />
     <Compile Include="Jobs\CrawlPrevJob.cs" />
     <Compile Include="Jobs\CrawlRealtimeJobFake.cs" />
     <Compile Include="Jobs\CrawlRealtimeJob.cs" />
     <Compile Include="Model\CongTyDTO.cs" />
     <Compile Include="Model\PageDTO.cs" />
+    <Compile Include="Model\TinhThanhModel.cs" />
     <Compile Include="NLogLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
