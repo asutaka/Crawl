@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 
 namespace Crawl
 {
@@ -90,6 +91,12 @@ namespace Crawl
             {
                 NLogLogger.PublishException(ex, $"frmMain.frmMain_FormClosed|EXCEPTION| {ex.Message}");
             }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            var path = Directory.GetCurrentDirectory();
+            grid.ExportToXlsx($"{path}/Company.xlsx");
         }
     }
 }
