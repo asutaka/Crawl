@@ -5,6 +5,7 @@ namespace Crawl
 {
     public static class StaticVal
     {
+        public static string TinhThanh = string.Empty;
         public static ScheduleMng scheduleMng = ScheduleMng.Instance();
         private static ChromeDriver _chrome = null, _chome1 = null;
         public static ChromeDriver GetChrome(int mode)
