@@ -27,9 +27,9 @@ namespace Crawl
         private void frmMain_Load(object sender, EventArgs e)
         {
             ReloadData();
-            //new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0/10 * * * * ?", nameof(CrawlRealtimeJobFake)).Start();
-            _RealTimeJob.Start();
-            _PrevJob.Start();
+            ScheduleMng.Instance().AddSchedule(_RealTimeJob);
+            ScheduleMng.Instance().AddSchedule(_PrevJob);
+            ScheduleMng.Instance().StartAllJob();
         }
 
         private void bkgrConfig_DoWork(object sender, DoWorkEventArgs e)
@@ -47,10 +47,13 @@ namespace Crawl
 
             _bkgr.DoWork -= bkgrConfig_DoWork;
             _bkgr.RunWorkerCompleted -= bkgrConfig_RunWorkerCompleted;
+
+            btnReload.Enabled = true;
         }
 
         private void btnReload_Click(object sender, EventArgs e)
         {
+            btnReload.Enabled = false;
             ReloadData();
         }
 
@@ -95,8 +98,26 @@ namespace Crawl
 
         private void btnExport_Click(object sender, EventArgs e)
         {
+            btnExport.Enabled = false;
             var path = Directory.GetCurrentDirectory();
             grid.ExportToXlsx($"{path}/Company.xlsx");
+            btnExport.Enabled = true;
+        }
+
+        private void btnCrawl_Click(object sender, EventArgs e)
+        {
+            btnCrawl.Enabled = false;
+            if(_RealTimeJob.IsPaused())
+            {
+                ScheduleMng.Instance().StartAllJob();
+                btnCrawl.Text = "Stop Crawl";
+            }
+            else
+            {
+                ScheduleMng.Instance().StopAllJob();
+                btnCrawl.Text = "Start Crawl";
+            }
+            btnCrawl.Enabled = true;
         }
     }
 }

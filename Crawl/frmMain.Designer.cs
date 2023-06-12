@@ -50,6 +50,7 @@ namespace Crawl
             this.label1 = new System.Windows.Forms.Label();
             this.lblTotalRow = new System.Windows.Forms.Label();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
+            this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -134,6 +135,8 @@ namespace Crawl
             this.MaSoThue.MaxWidth = 90;
             this.MaSoThue.MinWidth = 90;
             this.MaSoThue.Name = "MaSoThue";
+            this.MaSoThue.Visible = true;
+            this.MaSoThue.VisibleIndex = 2;
             this.MaSoThue.Width = 90;
             // 
             // DiaChi
@@ -145,7 +148,7 @@ namespace Crawl
             this.DiaChi.FieldName = "DiaChi";
             this.DiaChi.Name = "DiaChi";
             this.DiaChi.Visible = true;
-            this.DiaChi.VisibleIndex = 2;
+            this.DiaChi.VisibleIndex = 3;
             // 
             // PhuongXa
             // 
@@ -156,7 +159,7 @@ namespace Crawl
             this.PhuongXa.FieldName = "PhuongXa";
             this.PhuongXa.Name = "PhuongXa";
             this.PhuongXa.Visible = true;
-            this.PhuongXa.VisibleIndex = 3;
+            this.PhuongXa.VisibleIndex = 4;
             // 
             // QuanHuyen
             // 
@@ -167,7 +170,7 @@ namespace Crawl
             this.QuanHuyen.FieldName = "QuanHuyen";
             this.QuanHuyen.Name = "QuanHuyen";
             this.QuanHuyen.Visible = true;
-            this.QuanHuyen.VisibleIndex = 4;
+            this.QuanHuyen.VisibleIndex = 5;
             // 
             // TinhThanh
             // 
@@ -178,7 +181,7 @@ namespace Crawl
             this.TinhThanh.FieldName = "TinhThanh";
             this.TinhThanh.Name = "TinhThanh";
             this.TinhThanh.Visible = true;
-            this.TinhThanh.VisibleIndex = 5;
+            this.TinhThanh.VisibleIndex = 6;
             // 
             // DaiDienPhapLuat
             // 
@@ -189,7 +192,7 @@ namespace Crawl
             this.DaiDienPhapLuat.FieldName = "DaiDienPhapLuat";
             this.DaiDienPhapLuat.Name = "DaiDienPhapLuat";
             this.DaiDienPhapLuat.Visible = true;
-            this.DaiDienPhapLuat.VisibleIndex = 6;
+            this.DaiDienPhapLuat.VisibleIndex = 7;
             // 
             // DienThoaiTruSoImg
             // 
@@ -200,7 +203,7 @@ namespace Crawl
             this.DienThoaiTruSoImg.FieldName = "DienThoaiTruSoImg";
             this.DienThoaiTruSoImg.Name = "DienThoaiTruSoImg";
             this.DienThoaiTruSoImg.Visible = true;
-            this.DienThoaiTruSoImg.VisibleIndex = 9;
+            this.DienThoaiTruSoImg.VisibleIndex = 10;
             // 
             // NgayCapGiayPhep
             // 
@@ -216,7 +219,7 @@ namespace Crawl
             this.NgayCapGiayPhep.MinWidth = 80;
             this.NgayCapGiayPhep.Name = "NgayCapGiayPhep";
             this.NgayCapGiayPhep.Visible = true;
-            this.NgayCapGiayPhep.VisibleIndex = 7;
+            this.NgayCapGiayPhep.VisibleIndex = 8;
             this.NgayCapGiayPhep.Width = 80;
             // 
             // NgayHoatDong
@@ -233,7 +236,7 @@ namespace Crawl
             this.NgayHoatDong.MinWidth = 80;
             this.NgayHoatDong.Name = "NgayHoatDong";
             this.NgayHoatDong.Visible = true;
-            this.NgayHoatDong.VisibleIndex = 8;
+            this.NgayHoatDong.VisibleIndex = 9;
             this.NgayHoatDong.Width = 80;
             // 
             // TrangThai
@@ -250,7 +253,7 @@ namespace Crawl
             this.TrangThai.MinWidth = 90;
             this.TrangThai.Name = "TrangThai";
             this.TrangThai.Visible = true;
-            this.TrangThai.VisibleIndex = 10;
+            this.TrangThai.VisibleIndex = 11;
             this.TrangThai.Width = 90;
             // 
             // LinkWeb
@@ -298,11 +301,21 @@ namespace Crawl
             this.btnExport.Text = "Export";
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
+            // btnCrawl
+            // 
+            this.btnCrawl.Location = new System.Drawing.Point(166, 12);
+            this.btnCrawl.Name = "btnCrawl";
+            this.btnCrawl.Size = new System.Drawing.Size(75, 23);
+            this.btnCrawl.TabIndex = 7;
+            this.btnCrawl.Text = "Stop Crawl";
+            this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 479);
+            this.Controls.Add(this.btnCrawl);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblTotalRow);
             this.Controls.Add(this.label1);
@@ -342,5 +355,6 @@ namespace Crawl
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblTotalRow;
         private DevExpress.XtraEditors.SimpleButton btnExport;
+        private DevExpress.XtraEditors.SimpleButton btnCrawl;
     }
 }
