@@ -40,6 +40,7 @@ namespace Crawl
             this.QuanHuyen = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TinhThanh = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DaiDienPhapLuat = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.DienThoaiTruSo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.DienThoaiTruSoImg = new DevExpress.XtraGrid.Columns.GridColumn();
             this.NgayCapGiayPhep = new DevExpress.XtraGrid.Columns.GridColumn();
             this.NgayHoatDong = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -80,6 +81,7 @@ namespace Crawl
             this.QuanHuyen,
             this.TinhThanh,
             this.DaiDienPhapLuat,
+            this.DienThoaiTruSo,
             this.DienThoaiTruSoImg,
             this.NgayCapGiayPhep,
             this.NgayHoatDong,
@@ -193,6 +195,12 @@ namespace Crawl
             this.DaiDienPhapLuat.Name = "DaiDienPhapLuat";
             this.DaiDienPhapLuat.Visible = true;
             this.DaiDienPhapLuat.VisibleIndex = 7;
+            // 
+            // DienThoaiTruSo
+            // 
+            this.DienThoaiTruSo.Caption = "Điện thoại trụ sở";
+            this.DienThoaiTruSo.FieldName = "DienThoaiTruSo";
+            this.DienThoaiTruSo.Name = "DienThoaiTruSo";
             // 
             // DienThoaiTruSoImg
             // 
@@ -356,5 +364,6 @@ namespace Crawl
         private System.Windows.Forms.Label lblTotalRow;
         private DevExpress.XtraEditors.SimpleButton btnExport;
         private DevExpress.XtraEditors.SimpleButton btnCrawl;
+        private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSo;
     }
 }
