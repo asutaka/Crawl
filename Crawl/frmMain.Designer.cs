@@ -52,6 +52,7 @@ namespace Crawl
             this.lblTotalRow = new System.Windows.Forms.Label();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
+            this.MoTa = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -86,12 +87,12 @@ namespace Crawl
             this.NgayCapGiayPhep,
             this.NgayHoatDong,
             this.TrangThai,
-            this.LinkWeb});
+            this.LinkWeb,
+            this.MoTa});
             this.gridView1.GridControl = this.grid;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsBehavior.AllowAddRows = DevExpress.Utils.DefaultBoolean.False;
             this.gridView1.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False;
-            this.gridView1.OptionsBehavior.ReadOnly = true;
             this.gridView1.OptionsView.AllowHtmlDrawGroups = false;
             this.gridView1.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.Hidden;
             this.gridView1.OptionsView.ShowGroupPanel = false;
@@ -110,6 +111,7 @@ namespace Crawl
             this.TenCongTy.FieldName = "TenCongTy";
             this.TenCongTy.Name = "TenCongTy";
             this.TenCongTy.OptionsColumn.AllowEdit = false;
+            this.TenCongTy.OptionsColumn.ReadOnly = true;
             this.TenCongTy.Visible = true;
             this.TenCongTy.VisibleIndex = 0;
             // 
@@ -121,6 +123,7 @@ namespace Crawl
             this.LoaiHinhHoatDong.Caption = "Loại Hình";
             this.LoaiHinhHoatDong.FieldName = "LoaiHinhHoatDong";
             this.LoaiHinhHoatDong.Name = "LoaiHinhHoatDong";
+            this.LoaiHinhHoatDong.OptionsColumn.ReadOnly = true;
             this.LoaiHinhHoatDong.Visible = true;
             this.LoaiHinhHoatDong.VisibleIndex = 1;
             // 
@@ -137,6 +140,7 @@ namespace Crawl
             this.MaSoThue.MaxWidth = 90;
             this.MaSoThue.MinWidth = 90;
             this.MaSoThue.Name = "MaSoThue";
+            this.MaSoThue.OptionsColumn.ReadOnly = true;
             this.MaSoThue.Visible = true;
             this.MaSoThue.VisibleIndex = 2;
             this.MaSoThue.Width = 90;
@@ -149,6 +153,7 @@ namespace Crawl
             this.DiaChi.Caption = "Địa Chỉ";
             this.DiaChi.FieldName = "DiaChi";
             this.DiaChi.Name = "DiaChi";
+            this.DiaChi.OptionsColumn.ReadOnly = true;
             this.DiaChi.Visible = true;
             this.DiaChi.VisibleIndex = 3;
             // 
@@ -160,6 +165,7 @@ namespace Crawl
             this.PhuongXa.Caption = "Phường/Xã";
             this.PhuongXa.FieldName = "PhuongXa";
             this.PhuongXa.Name = "PhuongXa";
+            this.PhuongXa.OptionsColumn.ReadOnly = true;
             this.PhuongXa.Visible = true;
             this.PhuongXa.VisibleIndex = 4;
             // 
@@ -171,6 +177,7 @@ namespace Crawl
             this.QuanHuyen.Caption = "Quận/Huyện";
             this.QuanHuyen.FieldName = "QuanHuyen";
             this.QuanHuyen.Name = "QuanHuyen";
+            this.QuanHuyen.OptionsColumn.ReadOnly = true;
             this.QuanHuyen.Visible = true;
             this.QuanHuyen.VisibleIndex = 5;
             // 
@@ -182,6 +189,7 @@ namespace Crawl
             this.TinhThanh.Caption = "Tỉnh/Thành";
             this.TinhThanh.FieldName = "TinhThanh";
             this.TinhThanh.Name = "TinhThanh";
+            this.TinhThanh.OptionsColumn.ReadOnly = true;
             this.TinhThanh.Visible = true;
             this.TinhThanh.VisibleIndex = 6;
             // 
@@ -193,6 +201,7 @@ namespace Crawl
             this.DaiDienPhapLuat.Caption = "Đại Diện";
             this.DaiDienPhapLuat.FieldName = "DaiDienPhapLuat";
             this.DaiDienPhapLuat.Name = "DaiDienPhapLuat";
+            this.DaiDienPhapLuat.OptionsColumn.ReadOnly = true;
             this.DaiDienPhapLuat.Visible = true;
             this.DaiDienPhapLuat.VisibleIndex = 7;
             // 
@@ -201,6 +210,7 @@ namespace Crawl
             this.DienThoaiTruSo.Caption = "Điện thoại trụ sở";
             this.DienThoaiTruSo.FieldName = "DienThoaiTruSo";
             this.DienThoaiTruSo.Name = "DienThoaiTruSo";
+            this.DienThoaiTruSo.OptionsColumn.ReadOnly = true;
             // 
             // DienThoaiTruSoImg
             // 
@@ -210,6 +220,7 @@ namespace Crawl
             this.DienThoaiTruSoImg.Caption = "Điện Thoại";
             this.DienThoaiTruSoImg.FieldName = "DienThoaiTruSoImg";
             this.DienThoaiTruSoImg.Name = "DienThoaiTruSoImg";
+            this.DienThoaiTruSoImg.OptionsColumn.ReadOnly = true;
             this.DienThoaiTruSoImg.Visible = true;
             this.DienThoaiTruSoImg.VisibleIndex = 10;
             // 
@@ -226,6 +237,7 @@ namespace Crawl
             this.NgayCapGiayPhep.MaxWidth = 80;
             this.NgayCapGiayPhep.MinWidth = 80;
             this.NgayCapGiayPhep.Name = "NgayCapGiayPhep";
+            this.NgayCapGiayPhep.OptionsColumn.ReadOnly = true;
             this.NgayCapGiayPhep.Visible = true;
             this.NgayCapGiayPhep.VisibleIndex = 8;
             this.NgayCapGiayPhep.Width = 80;
@@ -243,6 +255,7 @@ namespace Crawl
             this.NgayHoatDong.MaxWidth = 80;
             this.NgayHoatDong.MinWidth = 80;
             this.NgayHoatDong.Name = "NgayHoatDong";
+            this.NgayHoatDong.OptionsColumn.ReadOnly = true;
             this.NgayHoatDong.Visible = true;
             this.NgayHoatDong.VisibleIndex = 9;
             this.NgayHoatDong.Width = 80;
@@ -260,6 +273,7 @@ namespace Crawl
             this.TrangThai.MaxWidth = 90;
             this.TrangThai.MinWidth = 90;
             this.TrangThai.Name = "TrangThai";
+            this.TrangThai.OptionsColumn.ReadOnly = true;
             this.TrangThai.Visible = true;
             this.TrangThai.VisibleIndex = 11;
             this.TrangThai.Width = 90;
@@ -269,6 +283,7 @@ namespace Crawl
             this.LinkWeb.Caption = "Link";
             this.LinkWeb.FieldName = "LinkWeb";
             this.LinkWeb.Name = "LinkWeb";
+            this.LinkWeb.OptionsColumn.ReadOnly = true;
             // 
             // btnReload
             // 
@@ -318,6 +333,14 @@ namespace Crawl
             this.btnCrawl.Text = "Stop Crawl";
             this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
             // 
+            // MoTa
+            // 
+            this.MoTa.Caption = "Ghi chú";
+            this.MoTa.FieldName = "MoTa";
+            this.MoTa.Name = "MoTa";
+            this.MoTa.Visible = true;
+            this.MoTa.VisibleIndex = 12;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -365,5 +388,6 @@ namespace Crawl
         private DevExpress.XtraEditors.SimpleButton btnExport;
         private DevExpress.XtraEditors.SimpleButton btnCrawl;
         private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSo;
+        private DevExpress.XtraGrid.Columns.GridColumn MoTa;
     }
 }
