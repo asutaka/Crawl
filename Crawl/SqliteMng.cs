@@ -49,6 +49,21 @@ namespace Crawl
             }
         }
 
+        public static void UpdateData(string id, string des)
+        {
+            var command = $"update CongTy set MoTa = '{des}' where ID = '{id}'";
+            try
+            {
+                var sqlite_cmd = GetConnection().CreateCommand();
+                sqlite_cmd.CommandText = command;
+                sqlite_cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"SqliteMng.UpdateData|EXCEPTION|INPUT: {command}| {ex.Message}");
+            }
+        }
+
         public static List<CongTyDTO> GetData()
         {
             var lstResult = new List<CongTyDTO>();

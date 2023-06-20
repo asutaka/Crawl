@@ -46,13 +46,13 @@ namespace Crawl
             this.NgayHoatDong = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TrangThai = new DevExpress.XtraGrid.Columns.GridColumn();
             this.LinkWeb = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.MoTa = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnReload = new DevExpress.XtraEditors.SimpleButton();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.lblTotalRow = new System.Windows.Forms.Label();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
-            this.MoTa = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -96,6 +96,7 @@ namespace Crawl
             this.gridView1.OptionsView.AllowHtmlDrawGroups = false;
             this.gridView1.OptionsView.GroupFooterShowMode = DevExpress.XtraGrid.Views.Grid.GroupFooterShowMode.Hidden;
             this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.RowUpdated += new DevExpress.XtraGrid.Views.Base.RowObjectEventHandler(this.gridView1_RowUpdated);
             this.gridView1.DoubleClick += new System.EventHandler(this.gridView1_DoubleClick);
             // 
             // TenCongTy
@@ -285,6 +286,17 @@ namespace Crawl
             this.LinkWeb.Name = "LinkWeb";
             this.LinkWeb.OptionsColumn.ReadOnly = true;
             // 
+            // MoTa
+            // 
+            this.MoTa.AppearanceHeader.Options.UseTextOptions = true;
+            this.MoTa.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.MoTa.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.MoTa.Caption = "Ghi chú";
+            this.MoTa.FieldName = "MoTa";
+            this.MoTa.Name = "MoTa";
+            this.MoTa.Visible = true;
+            this.MoTa.VisibleIndex = 12;
+            // 
             // btnReload
             // 
             this.btnReload.Location = new System.Drawing.Point(4, 12);
@@ -332,14 +344,6 @@ namespace Crawl
             this.btnCrawl.TabIndex = 7;
             this.btnCrawl.Text = "Stop Crawl";
             this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
-            // 
-            // MoTa
-            // 
-            this.MoTa.Caption = "Ghi chú";
-            this.MoTa.FieldName = "MoTa";
-            this.MoTa.Name = "MoTa";
-            this.MoTa.Visible = true;
-            this.MoTa.VisibleIndex = 12;
             // 
             // frmMain
             // 

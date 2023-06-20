@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 
 namespace Crawl
 {
@@ -99,6 +100,18 @@ namespace Crawl
         private void btnExport_Click(object sender, EventArgs e)
         {
             btnExport.Enabled = false;
+            try
+            {
+                foreach (var item in _lst)
+                {
+                    SqliteMng.UpdateData(item.Item1, item.Item2);
+                }
+                _lst.Clear();
+            }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"frmMain.btnExport_Click|EXCEPTION| {ex.Message}");
+            }
             var path = Directory.GetCurrentDirectory();
             grid.ExportToXlsx($"{path}/Company.xlsx");
             btnExport.Enabled = true;
@@ -118,6 +131,28 @@ namespace Crawl
                 btnCrawl.Text = "Start Crawl";
             }
             btnCrawl.Enabled = true;
+        }
+
+        private List<(string, string)> _lst = new List<(string, string)>();
+        private void gridView1_RowUpdated(object sender, DevExpress.XtraGrid.Views.Base.RowObjectEventArgs e)
+        {
+            if (e.RowHandle < 0)
+                return;
+            var id = gridView1.GetRowCellValue(e.RowHandle, "ID")?.ToString();
+            var des = gridView1.GetRowCellValue(e.RowHandle, "MoTa")?.ToString();
+            if (!string.IsNullOrWhiteSpace(id))
+            {
+                var entity = _lst.FirstOrDefault(x => x.Item1.Equals(id));
+                if (entity.Item1 != null)
+                {
+                    _lst.Remove(entity);
+                } 
+                
+                if(!string.IsNullOrWhiteSpace(des))
+                {
+                    _lst.Add((id, des));
+                }    
+            }    
         }
     }
 }
