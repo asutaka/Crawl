@@ -53,6 +53,7 @@ namespace Crawl
             this.lblTotalRow = new System.Windows.Forms.Label();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
+            this.CreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -88,6 +89,7 @@ namespace Crawl
             this.NgayHoatDong,
             this.TrangThai,
             this.LinkWeb,
+            this.CreatedDate,
             this.MoTa});
             this.gridView1.GridControl = this.grid;
             this.gridView1.Name = "gridView1";
@@ -295,7 +297,7 @@ namespace Crawl
             this.MoTa.FieldName = "MoTa";
             this.MoTa.Name = "MoTa";
             this.MoTa.Visible = true;
-            this.MoTa.VisibleIndex = 12;
+            this.MoTa.VisibleIndex = 13;
             // 
             // btnReload
             // 
@@ -345,6 +347,22 @@ namespace Crawl
             this.btnCrawl.Text = "Stop Crawl";
             this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
             // 
+            // CreatedDate
+            // 
+            this.CreatedDate.AppearanceCell.Options.UseTextOptions = true;
+            this.CreatedDate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.CreatedDate.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.CreatedDate.AppearanceHeader.Options.UseTextOptions = true;
+            this.CreatedDate.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.CreatedDate.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.CreatedDate.Caption = "Ngày Crawl";
+            this.CreatedDate.FieldName = "CreatedDate";
+            this.CreatedDate.Name = "CreatedDate";
+            this.CreatedDate.OptionsColumn.AllowEdit = false;
+            this.CreatedDate.OptionsColumn.ReadOnly = true;
+            this.CreatedDate.Visible = true;
+            this.CreatedDate.VisibleIndex = 12;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -393,5 +411,6 @@ namespace Crawl
         private DevExpress.XtraEditors.SimpleButton btnCrawl;
         private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSo;
         private DevExpress.XtraGrid.Columns.GridColumn MoTa;
+        private DevExpress.XtraGrid.Columns.GridColumn CreatedDate;
     }
 }
