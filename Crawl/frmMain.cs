@@ -3,6 +3,7 @@ using Crawl.Model;
 using Crawl.ScheduleJob;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using Newtonsoft.Json;
 using Quartz;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace Crawl
         private BackgroundWorker _bkgr = new BackgroundWorker();
         private List<CongTyDTO> _lstData = new List<CongTyDTO>();
         private int _totalRow = 0;
+        private bool _changeSelect = false;
+        private bool _modeSelect = false;
         private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0 * * * * ?", nameof(CrawlRealtimeJobFake));
         private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob));
         public frmMain()
@@ -27,6 +30,7 @@ namespace Crawl
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            LoadComboBox();
             ReloadData();
             ScheduleMng.Instance().AddSchedule(_RealTimeJob);
             ScheduleMng.Instance().AddSchedule(_PrevJob);
@@ -55,6 +59,10 @@ namespace Crawl
         private void btnReload_Click(object sender, EventArgs e)
         {
             btnReload.Enabled = false;
+            if(_changeSelect)
+            {
+                UpdateJsonFile();
+            }
             ReloadData();
         }
 
@@ -63,6 +71,54 @@ namespace Crawl
             _bkgr.DoWork += bkgrConfig_DoWork;
             _bkgr.RunWorkerCompleted += bkgrConfig_RunWorkerCompleted;
             _bkgr.RunWorkerAsync();
+        }
+
+        private void LoadComboBox()
+        {
+            cmbCheck.Properties.ValueMember = "MaMap"; // IDNo = bigint  
+            cmbCheck.Properties.DisplayMember = "TenTinhThanh"; // Name = nvarchar(256)  
+            cmbCheck.Properties.DataSource = new TinhThanhModel().lData;
+
+            var config = LoadJsonFile();
+            if(config != null)
+            {
+                cmbCheck.SetEditValue(config.TinhThanh);
+            }
+            _modeSelect = true;
+        }
+
+        private void UpdateJsonFile()
+        {
+            try
+            {
+                var config = new ConfigModel
+                {
+                    TinhThanh = cmbCheck.EditValue?.ToString()
+                };
+                File.WriteAllText("config.json", JsonConvert.SerializeObject(config));
+            }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"frmMain.UpdateJsonFile|EXCEPTION| {ex.Message}");
+            }
+        }
+
+        private ConfigModel LoadJsonFile()
+        {
+            try
+            {
+                using (StreamReader r = new StreamReader("config.json"))
+                {
+                    string json = r.ReadToEnd();
+                    var config = JsonConvert.DeserializeObject<ConfigModel>(json);
+                    return config;
+                }
+            }
+            catch(Exception ex)
+            {
+                NLogLogger.PublishException(ex, $"frmMain.LoadJsonFile|EXCEPTION| {ex.Message}");
+            }
+            return null;
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)
@@ -153,6 +209,13 @@ namespace Crawl
                     _lst.Add((id, des));
                 }    
             }    
+        }
+
+        private void cmbCheck_EditValueChanged(object sender, EventArgs e)
+        {
+            if (!_modeSelect)
+                return;
+            _changeSelect = true;
         }
     }
 }

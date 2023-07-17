@@ -14,6 +14,7 @@ namespace Crawl.Model
 
         public TinhThanhModel()
         {
+            lData = new List<TinhThanhDTO>();
             lData.Add(new TinhThanhDTO { TenTinhThanh = "An Giang", MaMap= "an-giang-93" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Bà Rịa - Vũng Tàu", MaMap= "ba-ria-vung-tau-32" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Bắc Giang", MaMap= "bac-giang-72" });
@@ -70,7 +71,7 @@ namespace Crawl.Model
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Thái Bình", MaMap= "thai-binh-128" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Thái Nguyên", MaMap= "thai-nguyen-131" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Thanh Hóa", MaMap= "thanh-hoa-4" });
-            lData.Add(new TinhThanhDTO { TenTinhThanh = "Thừa Thiên Huế", MaMap= "thua-thien-hue-66" });
+            lData.Add(new TinhThanhDTO { TenTinhThanh = "Thừa Thiên - Huế", MaMap= "thua-thien-hue-66" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Tiền Giang", MaMap= "tien-giang-177" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Trà Vinh", MaMap= "tra-vinh-41" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Tuyên Quang", MaMap= "tuyen-quang-1284" });

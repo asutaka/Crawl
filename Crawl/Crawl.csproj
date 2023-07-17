@@ -181,6 +181,7 @@
     <Compile Include="Jobs\CrawlPrevJob.cs" />
     <Compile Include="Jobs\CrawlRealtimeJobFake.cs" />
     <Compile Include="Jobs\CrawlRealtimeJob.cs" />
+    <Compile Include="Model\ConfigModel.cs" />
     <Compile Include="Model\CongTyDTO.cs" />
     <Compile Include="Model\PageDTO.cs" />
     <Compile Include="Model\TinhThanhModel.cs" />

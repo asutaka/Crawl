@@ -54,9 +54,11 @@ namespace Crawl
             this.lblTotalRow = new System.Windows.Forms.Label();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
+            this.cmbCheck = new DevExpress.XtraEditors.CheckedComboBoxEdit();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCheck.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // grid
@@ -361,11 +363,22 @@ namespace Crawl
             this.btnCrawl.Text = "Stop Crawl";
             this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
             // 
+            // cmbCheck
+            // 
+            this.cmbCheck.Location = new System.Drawing.Point(247, 14);
+            this.cmbCheck.Name = "cmbCheck";
+            this.cmbCheck.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cmbCheck.Size = new System.Drawing.Size(297, 20);
+            this.cmbCheck.TabIndex = 8;
+            this.cmbCheck.EditValueChanged += new System.EventHandler(this.cmbCheck_EditValueChanged);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(983, 479);
+            this.Controls.Add(this.cmbCheck);
             this.Controls.Add(this.btnCrawl);
             this.Controls.Add(this.btnExport);
             this.Controls.Add(this.lblTotalRow);
@@ -379,6 +392,7 @@ namespace Crawl
             ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbCheck.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -410,5 +424,6 @@ namespace Crawl
         private DevExpress.XtraGrid.Columns.GridColumn DienThoaiTruSo;
         private DevExpress.XtraGrid.Columns.GridColumn MoTa;
         private DevExpress.XtraGrid.Columns.GridColumn CreatedDate;
+        private DevExpress.XtraEditors.CheckedComboBoxEdit cmbCheck;
     }
 }
