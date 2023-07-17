@@ -46,6 +46,7 @@ namespace Crawl
             this.NgayHoatDong = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TrangThai = new DevExpress.XtraGrid.Columns.GridColumn();
             this.LinkWeb = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.CreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             this.MoTa = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnReload = new DevExpress.XtraEditors.SimpleButton();
             this.behaviorManager1 = new DevExpress.Utils.Behaviors.BehaviorManager(this.components);
@@ -53,7 +54,6 @@ namespace Crawl
             this.lblTotalRow = new System.Windows.Forms.Label();
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
-            this.CreatedDate = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -277,8 +277,6 @@ namespace Crawl
             this.TrangThai.MinWidth = 90;
             this.TrangThai.Name = "TrangThai";
             this.TrangThai.OptionsColumn.ReadOnly = true;
-            this.TrangThai.Visible = true;
-            this.TrangThai.VisibleIndex = 11;
             this.TrangThai.Width = 90;
             // 
             // LinkWeb
@@ -287,6 +285,22 @@ namespace Crawl
             this.LinkWeb.FieldName = "LinkWeb";
             this.LinkWeb.Name = "LinkWeb";
             this.LinkWeb.OptionsColumn.ReadOnly = true;
+            // 
+            // CreatedDate
+            // 
+            this.CreatedDate.AppearanceCell.Options.UseTextOptions = true;
+            this.CreatedDate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.CreatedDate.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.CreatedDate.AppearanceHeader.Options.UseTextOptions = true;
+            this.CreatedDate.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.CreatedDate.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+            this.CreatedDate.Caption = "Ngày Crawl";
+            this.CreatedDate.FieldName = "CreatedDate";
+            this.CreatedDate.Name = "CreatedDate";
+            this.CreatedDate.OptionsColumn.AllowEdit = false;
+            this.CreatedDate.OptionsColumn.ReadOnly = true;
+            this.CreatedDate.Visible = true;
+            this.CreatedDate.VisibleIndex = 11;
             // 
             // MoTa
             // 
@@ -297,7 +311,7 @@ namespace Crawl
             this.MoTa.FieldName = "MoTa";
             this.MoTa.Name = "MoTa";
             this.MoTa.Visible = true;
-            this.MoTa.VisibleIndex = 13;
+            this.MoTa.VisibleIndex = 12;
             // 
             // btnReload
             // 
@@ -346,22 +360,6 @@ namespace Crawl
             this.btnCrawl.TabIndex = 7;
             this.btnCrawl.Text = "Stop Crawl";
             this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
-            // 
-            // CreatedDate
-            // 
-            this.CreatedDate.AppearanceCell.Options.UseTextOptions = true;
-            this.CreatedDate.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.CreatedDate.AppearanceCell.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.CreatedDate.AppearanceHeader.Options.UseTextOptions = true;
-            this.CreatedDate.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.CreatedDate.AppearanceHeader.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
-            this.CreatedDate.Caption = "Ngày Crawl";
-            this.CreatedDate.FieldName = "CreatedDate";
-            this.CreatedDate.Name = "CreatedDate";
-            this.CreatedDate.OptionsColumn.AllowEdit = false;
-            this.CreatedDate.OptionsColumn.ReadOnly = true;
-            this.CreatedDate.Visible = true;
-            this.CreatedDate.VisibleIndex = 12;
             // 
             // frmMain
             // 
