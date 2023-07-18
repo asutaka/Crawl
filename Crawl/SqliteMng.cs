@@ -64,13 +64,13 @@ namespace Crawl
             }
         }
 
-        public static List<CongTyDTO> GetData()
+        public static List<CongTyDTO> GetData(string clause)
         {
             var lstResult = new List<CongTyDTO>();
             try
             {
                 var sqlite_cmd = GetConnection().CreateCommand();
-                sqlite_cmd.CommandText = "SELECT * FROM CongTy ORDER BY ngayhoatdong DESC";
+                sqlite_cmd.CommandText = $"SELECT * FROM CongTy WHERE 1 = 1 {clause} ORDER BY ngayhoatdong DESC";
                 using (var dataReader = sqlite_cmd.ExecuteReader())
                 {
                     if (dataReader.HasRows)
@@ -112,9 +112,9 @@ namespace Crawl
             }
         }
 
-        public static int TotalRow()
+        public static int TotalRow(string clause)
         {
-            var command = $"select COUNT(1) as PageNum from CongTy";
+            var command = $"select COUNT(1) as PageNum from CongTy WHERE 1 = 1 {clause}";
             try
             {
                 var sqlite_cmd = GetConnection().CreateCommand();

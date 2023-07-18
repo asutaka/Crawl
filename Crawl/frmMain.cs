@@ -21,7 +21,7 @@ namespace Crawl
         private int _totalRow = 0;
         private bool _changeSelect = false;
         private bool _modeSelect = false;
-        private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0 * * * * ?", nameof(CrawlRealtimeJobFake));
+        private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0/5 * * * * ?", nameof(CrawlRealtimeJobFake));
         private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob));
         public frmMain()
         {
@@ -30,6 +30,7 @@ namespace Crawl
 
         private void frmMain_Load(object sender, EventArgs e)
         {
+            LoadJsonFile();
             LoadComboBox();
             ReloadData();
             ScheduleMng.Instance().AddSchedule(_RealTimeJob);
@@ -37,10 +38,33 @@ namespace Crawl
             ScheduleMng.Instance().StartAllJob();
         }
 
+        private string BuildClause()
+        {
+            var val = cmbCheck.EditValue.ToString();
+            if (string.IsNullOrWhiteSpace(val))
+                return string.Empty;
+            var arrSplit = val.Split(',');
+            var lClause = new List<string>();
+            foreach (var item in arrSplit)
+            {
+                var entityTinhThanh = StaticVal._lstCmb.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
+                if (entityTinhThanh == null)
+                    continue;
+
+                lClause.Add($"tinhthanh LIKE '%{ entityTinhThanh.TenTinhThanh }%'");
+            }
+
+            if (!lClause.Any())
+                return string.Empty;
+
+            return $"AND ({string.Join(" OR ", lClause.ToArray())})";
+        }
+
         private void bkgrConfig_DoWork(object sender, DoWorkEventArgs e)
         {
-            _totalRow = SqliteMng.TotalRow();
-            _lstData = SqliteMng.GetData();
+            var strClause = BuildClause();
+            _totalRow = SqliteMng.TotalRow(strClause);
+            _lstData = SqliteMng.GetData(strClause);
         }
 
         private void bkgrConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -77,12 +101,10 @@ namespace Crawl
         {
             cmbCheck.Properties.ValueMember = "MaMap"; // IDNo = bigint  
             cmbCheck.Properties.DisplayMember = "TenTinhThanh"; // Name = nvarchar(256)  
-            cmbCheck.Properties.DataSource = new TinhThanhModel().lData;
-
-            var config = LoadJsonFile();
-            if(config != null)
+            cmbCheck.Properties.DataSource = StaticVal._lstCmb;
+            if(StaticVal._config != null)
             {
-                cmbCheck.SetEditValue(config.TinhThanh);
+                cmbCheck.SetEditValue(StaticVal._config.TinhThanh);
             }
             _modeSelect = true;
         }
@@ -91,11 +113,11 @@ namespace Crawl
         {
             try
             {
-                var config = new ConfigModel
+                StaticVal._config = new ConfigModel
                 {
                     TinhThanh = cmbCheck.EditValue?.ToString()
                 };
-                File.WriteAllText("config.json", JsonConvert.SerializeObject(config));
+                File.WriteAllText("config.json", JsonConvert.SerializeObject(StaticVal._config));
             }
             catch(Exception ex)
             {
@@ -103,22 +125,20 @@ namespace Crawl
             }
         }
 
-        private ConfigModel LoadJsonFile()
+        private void LoadJsonFile()
         {
             try
             {
                 using (StreamReader r = new StreamReader("config.json"))
                 {
                     string json = r.ReadToEnd();
-                    var config = JsonConvert.DeserializeObject<ConfigModel>(json);
-                    return config;
+                    StaticVal._config = JsonConvert.DeserializeObject<ConfigModel>(json);
                 }
             }
             catch(Exception ex)
             {
                 NLogLogger.PublishException(ex, $"frmMain.LoadJsonFile|EXCEPTION| {ex.Message}");
             }
-            return null;
         }
 
         private void gridView1_DoubleClick(object sender, EventArgs e)

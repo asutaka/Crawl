@@ -1,5 +1,7 @@
-﻿using Crawl.ScheduleJob;
+﻿using Crawl.Model;
+using Crawl.ScheduleJob;
 using OpenQA.Selenium.Chrome;
+using System.Collections.Generic;
 
 namespace Crawl
 {
@@ -7,6 +9,8 @@ namespace Crawl
     {
         public static string TinhThanh = string.Empty;
         public static ScheduleMng scheduleMng = ScheduleMng.Instance();
+        public static ConfigModel _config = new ConfigModel();
+        public static List<TinhThanhDTO> _lstCmb = new TinhThanhModel().lData;
         private static ChromeDriver _chrome = null, _chome1 = null;
         public static ChromeDriver GetChrome(int mode)
         {
