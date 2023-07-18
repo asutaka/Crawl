@@ -369,7 +369,7 @@ namespace Crawl
             this.cmbCheck.Name = "cmbCheck";
             this.cmbCheck.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cmbCheck.Size = new System.Drawing.Size(297, 20);
+            this.cmbCheck.Size = new System.Drawing.Size(367, 20);
             this.cmbCheck.TabIndex = 8;
             this.cmbCheck.EditValueChanged += new System.EventHandler(this.cmbCheck_EditValueChanged);
             // 
