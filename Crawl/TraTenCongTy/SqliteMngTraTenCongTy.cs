@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Utils;
 
-namespace Crawl
+namespace Crawl.TraTenCongTy
 {
     public class SqliteMngTraTenCongTy
     {

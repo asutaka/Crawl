@@ -183,7 +183,7 @@
     <Compile Include="TraTenCongTy\ChildModel\TinhThanhModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqliteMngTraTenCongTy.cs" />
+    <Compile Include="TraTenCongTy\SqliteMngTraTenCongTy.cs" />
     <Compile Include="StaticVal.cs" />
     <EmbeddedResource Include="TraTenCongTy\frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
