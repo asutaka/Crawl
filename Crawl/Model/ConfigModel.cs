@@ -2,6 +2,8 @@
 {
     public class ConfigModel
     {
-        public string TinhThanh { get; set; }
+        public string Host { get; set; }
+        public string TinhThanhTraTenCongTy { get; set; }
+        public string TinhThanhInfoCom { get; set; }
     }
 }
