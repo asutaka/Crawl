@@ -181,22 +181,30 @@ namespace Crawl.TraTenCongTy
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            btnExport.Enabled = false;
-            try
+            saveFileDialog1.InitialDirectory = @"C:\";
+            saveFileDialog1.Title = "Browse Excel Files";
+            saveFileDialog1.DefaultExt = "xlsx";
+            saveFileDialog1.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.FileName = "Company.xlsx";
+            if (saveFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                foreach (var item in _lst)
+                btnExport.Enabled = false;
+                try
                 {
-                    SqliteMngTraTenCongTy.UpdateData(item.Item2, item.Item1);
+                    foreach (var item in _lst)
+                    {
+                        SqliteMngTraTenCongTy.UpdateData(item.Item2, item.Item1);
+                    }
+                    _lst.Clear();
                 }
-                _lst.Clear();
+                catch (Exception ex)
+                {
+                    NLogLogger.PublishException(ex, $"frmMain.btnExport_Click|EXCEPTION| {ex.Message}");
+                }
+                grid.ExportToXlsx(saveFileDialog1.FileName);
+                btnExport.Enabled = true;
             }
-            catch(Exception ex)
-            {
-                NLogLogger.PublishException(ex, $"frmMain.btnExport_Click|EXCEPTION| {ex.Message}");
-            }
-            var path = Directory.GetCurrentDirectory();
-            grid.ExportToXlsx($"{path}/Company.xlsx");
-            btnExport.Enabled = true;
         }
 
         private void btnCrawl_Click(object sender, EventArgs e)

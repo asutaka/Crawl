@@ -56,6 +56,7 @@ namespace Crawl.TraTenCongTy
             this.btnExport = new DevExpress.XtraEditors.SimpleButton();
             this.btnCrawl = new DevExpress.XtraEditors.SimpleButton();
             this.cmbCheck = new DevExpress.XtraEditors.CheckedComboBoxEdit();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.behaviorManager1)).BeginInit();
@@ -429,5 +430,6 @@ namespace Crawl.TraTenCongTy
         private DevExpress.XtraGrid.Columns.GridColumn MoTa;
         private DevExpress.XtraGrid.Columns.GridColumn CreatedDate;
         private DevExpress.XtraEditors.CheckedComboBoxEdit cmbCheck;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
