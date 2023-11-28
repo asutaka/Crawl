@@ -1,4 +1,5 @@
-﻿using Crawl.TraTenCongTy.ChildModel;
+﻿using Crawl.Model;
+using Crawl.TraTenCongTy.ChildModel;
 using HtmlAgilityPack;
 using PuppeteerSharp;
 using Quartz;
@@ -208,12 +209,12 @@ namespace Crawl.TraTenCongTy.Jobs
         {
             var val = StaticVal._config.TinhThanhTraTenCongTy;
             if (string.IsNullOrWhiteSpace(val))
-                return null;
+                return new List<string>();
             var arrSplit = val.Split(',');
             var lClause = new List<string>();
             foreach (var item in arrSplit)
             {
-                var entityTinhThanh = StaticVal._lstCmb.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
+                var entityTinhThanh = new TinhThanhModel().lData.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
                 if (entityTinhThanh == null)
                     continue;
 

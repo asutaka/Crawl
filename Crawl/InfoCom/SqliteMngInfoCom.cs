@@ -1,18 +1,17 @@
 ﻿using Crawl.Model;
-using Crawl.TraTenCongTy.ChildModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Utils;
 
-namespace Crawl.TraTenCongTy
+namespace Crawl.InfoCom
 {
-    public class SqliteMngTraTenCongTy
+    public class SqliteMngInfoCom
     {
         public static void InsertData(CongTyDTO param)
         {
             var command = "INSERT INTO CongTy(ID, TenCongTy, TenGiaoDich, LoaiHinhHoatDong, MaSoThue, DiaChi, DaiDienPhapLuat, NgayCapGiayPhep, NgayHoatDong, DienThoaiTruSo, TrangThai, TinhThanh, QuanHuyen, PhuongXa, LinkWeb, CreatedDate) " +
-                    $"VALUES('{Guid.NewGuid()}', '{param.TenCongTy.CheckNull().Replace("'", "")}', '{param.TenGiaoDich.CheckNull().Replace("'", "")}', '{param.LoaiHinhHoatDong.CheckNull()}', '{param.MaSoThue.CheckNull()}', '{param.DiaChi.CheckNull().Replace("'", "")}', '{param.DaiDienPhapLuat.CheckNull().Replace("'", "")}', '{param.NgayCapGiayPhep.FormatDate()}', '{param.NgayHoatDong.FormatDate()}', '{param.DienThoaiTruSo.CheckNull()}', '{param.TrangThai.CheckNull()}', '{param.TinhThanh.CheckNull().Replace("'", "")}', '{param.QuanHuyen.CheckNull().Replace("'", "")}', '{param.PhuongXa.CheckNull().Replace("'", "")}', '{param.LinkWeb.CheckNull()}', '{DateTime.Now.ToString("yyyy-MM-dd")}'); ";
+                    $"VALUES('{Guid.NewGuid()}', '{param.TenCongTy.CheckNull().Replace("'", "")}', '', '{param.LoaiHinhHoatDong.CheckNull()}', '{param.MaSoThue.CheckNull()}', '{param.DiaChi.CheckNull().Replace("'", "")}', '{param.DaiDienPhapLuat.CheckNull().Replace("'", "")}', '', '{param.NgayHoatDong}', '{param.DienThoaiTruSo.CheckNull()}', '', '{param.TinhThanh.CheckNull().Replace("'", "")}', '{param.QuanHuyen.CheckNull().Replace("'", "")}', '{param.PhuongXa.CheckNull().Replace("'", "")}', '{param.LinkWeb.CheckNull()}', '{DateTime.Now.ToString("yyyy-MM-dd")}'); ";
             SqliteMng.Insert(command);
         }
 

@@ -1,4 +1,5 @@
-﻿using Crawl.TraTenCongTy.ChildModel;
+﻿using Crawl.Model;
+using Crawl.TraTenCongTy.ChildModel;
 using HtmlAgilityPack;
 using Quartz;
 using System;

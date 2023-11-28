@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Crawl.TraTenCongTy.ChildModel
+namespace Crawl.Model
 {
     public class CongTyDTO
     {

@@ -1,4 +1,5 @@
-﻿using Crawl.Model;
+﻿using Crawl.InfoCom;
+using Crawl.Model;
 using Crawl.TraTenCongTy;
 using System;
 using System.Windows.Forms;
@@ -20,11 +21,12 @@ namespace Crawl
             if(StaticVal._config.Host.Equals(EWebsite.TraTenCongTy.GetDisplayName()))
             {
                 Helper.SetDatabase(EWebsite.TraTenCongTy.ToString());
-                Application.Run(new frmMain());
+                Application.Run(new frmTraTenCongTy());
             }
             else
             {
-
+                Helper.SetDatabase(EWebsite.InfoCom.ToString());
+                Application.Run(new frmInfoCom());
             }
         }
 

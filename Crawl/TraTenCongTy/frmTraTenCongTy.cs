@@ -16,7 +16,7 @@ using Utils.ScheduleJob;
 
 namespace Crawl.TraTenCongTy
 {
-    public partial class frmMain : DevExpress.XtraEditors.XtraForm
+    public partial class frmTraTenCongTy : DevExpress.XtraEditors.XtraForm
     {
         private BackgroundWorker _bkgr = new BackgroundWorker();
         private List<CongTyDTO> _lstData = new List<CongTyDTO>();
@@ -25,7 +25,7 @@ namespace Crawl.TraTenCongTy
         private bool _modeSelect = false;
         private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlRealtimeJobFake>(), "0/5 * * * * ?", nameof(CrawlRealtimeJobFake));
         private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<CrawlPrevJob>(), "30 * * * * ?", nameof(CrawlPrevJob));
-        public frmMain()
+        public frmTraTenCongTy()
         {
             InitializeComponent();
         }
@@ -49,7 +49,7 @@ namespace Crawl.TraTenCongTy
             var lClause = new List<string>();
             foreach (var item in arrSplit)
             {
-                var entityTinhThanh = StaticVal._lstCmb.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
+                var entityTinhThanh = new TinhThanhModel().lData.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
                 if (entityTinhThanh == null)
                     continue;
 
@@ -107,7 +107,7 @@ namespace Crawl.TraTenCongTy
         {
             cmbCheck.Properties.ValueMember = "MaMap"; // IDNo = bigint  
             cmbCheck.Properties.DisplayMember = "TenTinhThanh"; // Name = nvarchar(256)  
-            cmbCheck.Properties.DataSource = StaticVal._lstCmb;
+            cmbCheck.Properties.DataSource = new TinhThanhModel().lData;
             if(StaticVal._config != null)
             {
                 cmbCheck.SetEditValue(StaticVal._config.TinhThanhTraTenCongTy);
@@ -119,10 +119,7 @@ namespace Crawl.TraTenCongTy
         {
             try
             {
-                StaticVal._config = new ConfigModel
-                {
-                    TinhThanhTraTenCongTy = cmbCheck.EditValue?.ToString()
-                };
+                StaticVal._config.TinhThanhTraTenCongTy = cmbCheck.EditValue?.ToString();
                 File.WriteAllText("config.json", JsonConvert.SerializeObject(StaticVal._config));
             }
             catch(Exception ex)

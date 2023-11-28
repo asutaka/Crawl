@@ -1,6 +1,4 @@
 ﻿using Crawl.Model;
-using Crawl.TraTenCongTy.ChildModel;
-using System.Collections.Generic;
 using Utils.ScheduleJob;
 
 namespace Crawl
@@ -11,6 +9,5 @@ namespace Crawl
 
         public static string TinhThanh = string.Empty;
         public static ScheduleMng scheduleMng = ScheduleMng.Instance();
-        public static List<TinhThanhDTO> _lstCmb = new TinhThanhModel().lData;
     }
 }

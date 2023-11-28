@@ -19,13 +19,13 @@ namespace Utils
                 return string.Empty;
             return val.Trim();
         }
-        public static string FormatDate(this string val)
+        public static string FormatDate(this string val, string format = "dd/MM/yyyy")
         {
             if (string.IsNullOrWhiteSpace(val))
                 return string.Empty;
             try
             {
-                var dt = DateTime.ParseExact(val, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                var dt = DateTime.ParseExact(val, format, CultureInfo.InvariantCulture);
                 return dt.ToString("yyyy-MM-dd");
             }
             catch (Exception ex)
@@ -139,6 +139,25 @@ namespace Utils
             {
                 NLogLogger.PublishException(ex, $"frmMain.UpdateJsonFile|EXCEPTION| {ex.Message}");
             }
+        }
+
+        public static string CleanDate(this string val)
+        {
+            if (string.IsNullOrWhiteSpace(val))
+                return string.Empty;
+            return val.Replace("00:00:00","").Trim();
+        }
+        public static string MaxLengthText(this string str, int length = 50, bool cutEnd = true)
+        {
+            if (string.IsNullOrWhiteSpace(str)) return string.Empty;
+            if (str.Length > length)
+            {
+                if (cutEnd)
+                    return $"{str.Substring(0, length)}...";
+
+                return $"...{str.Substring(str.Length - length)}";
+            }
+            return str;
         }
     }
 }

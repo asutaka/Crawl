@@ -43,8 +43,8 @@ namespace Crawl.TraTenCongTy.ChildModel
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Hải Dương", MaMap= "hai-duong-147" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Hải Phòng", MaMap= "hai-phong-99" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Hậu Giang", MaMap= "hau-giang-190" });
-            lData.Add(new TinhThanhDTO { TenTinhThanh = "Hồ Chí Minh", MaMap= "ho-chi-minh-23" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Hòa Bình", MaMap= "hoa-binh-786" });
+            lData.Add(new TinhThanhDTO { TenTinhThanh = "Hồ Chí Minh", MaMap= "ho-chi-minh-23" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Hưng Yên", MaMap= "hung-yen-123" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Khánh Hòa", MaMap= "khanh-hoa-26" });
             lData.Add(new TinhThanhDTO { TenTinhThanh = "Kiên Giang", MaMap= "kien-giang-80" });

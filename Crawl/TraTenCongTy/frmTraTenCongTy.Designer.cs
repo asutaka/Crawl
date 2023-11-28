@@ -1,7 +1,7 @@
 ﻿
 namespace Crawl.TraTenCongTy
 {
-    partial class frmMain
+    partial class frmTraTenCongTy
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace Crawl.TraTenCongTy
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTraTenCongTy));
             this.grid = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.TenCongTy = new DevExpress.XtraGrid.Columns.GridColumn();
