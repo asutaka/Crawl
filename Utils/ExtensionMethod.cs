@@ -1,5 +1,6 @@
 ﻿using FastMember;
 using Newtonsoft.Json;
+using RestSharp;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SQLite;
@@ -7,12 +8,23 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 
 namespace Utils
 {
     public static class ExtensionMethod
     {
+        private static RestClient _client = new RestClient(new RestClientOptions()
+        {
+            Proxy = new WebProxy()
+            {
+                Address = new Uri("http://proxy.zenrows.com:8001"),
+                Credentials = new NetworkCredential("2e71a878b4001dab17981e09f064683dbd1519c1", "")
+            },
+            RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
+        });
+
         public static string CheckNull(this string val)
         {
             if (string.IsNullOrWhiteSpace(val))
@@ -158,6 +170,19 @@ namespace Utils
                 return $"...{str.Substring(str.Length - length)}";
             }
             return str;
+        }
+        public static string GetHtml(this string url)
+        {
+            try
+            {
+                var response = _client.Get(new RestRequest(url));
+                return response.Content;
+            }
+            catch (Exception ex)
+            {
+                NLogLogger.PublishException(ex);
+            }
+            return string.Empty;
         }
     }
 }

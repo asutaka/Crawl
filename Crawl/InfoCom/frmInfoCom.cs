@@ -24,7 +24,8 @@ namespace Crawl.InfoCom
         private bool _changeSelect = false;
         private bool _modeSelect = false;
         private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlRealTimeJob>(), "0/30 * * * * ?", nameof(InfoCom_CrawlRealTimeJob));
-        private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlPrevJob>(), "30 0/5 * * * ?", nameof(InfoCom_CrawlPrevJob));
+        //private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlPrevJob>(), "30 0/5 * * * ?", nameof(InfoCom_CrawlPrevJob));
+        private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlPrevJob>(), "0/10 * * * * ?", nameof(InfoCom_CrawlPrevJob));
         public frmInfoCom()
         {
             InitializeComponent();
@@ -67,10 +68,6 @@ namespace Crawl.InfoCom
             var strClause = BuildClause();
             _totalRow = SqliteMngInfoCom.TotalRow(strClause); 
             _lstData = SqliteMngInfoCom.GetData(strClause);
-            foreach (var item in _lstData)
-            {
-                item.DienThoaiTruSoImg = item.DienThoaiTruSo.GetImage();
-            }
         }
 
         private void bkgrConfig_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
