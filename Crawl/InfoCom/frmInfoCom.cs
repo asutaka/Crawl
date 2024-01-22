@@ -36,7 +36,7 @@ namespace Crawl.InfoCom
             LoadComboBox();
             ReloadData();
             ScheduleMng.Instance().AddSchedule(_RealTimeJob);
-            ScheduleMng.Instance().AddSchedule(_PrevJob);
+            //ScheduleMng.Instance().AddSchedule(_PrevJob);
             ScheduleMng.Instance().StartAllJob();
         }
 

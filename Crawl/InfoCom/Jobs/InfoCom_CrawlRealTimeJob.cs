@@ -1,14 +1,9 @@
-﻿using Crawl.InfoCom.ChildModel;
-using Crawl.Model;
+﻿using Crawl.Model;
 using HtmlAgilityPack;
-using PuppeteerSharp;
 using Quartz;
-using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using Utils;
 
 namespace Crawl.InfoCom.Jobs
@@ -199,14 +194,14 @@ namespace Crawl.InfoCom.Jobs
                 return new List<string>();
             var arrSplit = val.Split(',');
             var lClause = new List<string>();
-            foreach (var item in arrSplit)
-            {
-                var entityTinhThanh = new TinhThanhModel().lData.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
-                if (entityTinhThanh == null)
-                    continue;
+            //foreach (var item in arrSplit)
+            //{
+            //    var entityTinhThanh = new TinhThanhModel().lData.FirstOrDefault(x => x.MaMap.Equals(item.Trim()));
+            //    if (entityTinhThanh == null)
+            //        continue;
 
-                lClause.Add(entityTinhThanh.TenTinhThanh);
-            }
+            //    lClause.Add(entityTinhThanh.TenTinhThanh);
+            //}
             return lClause;
         }
     }

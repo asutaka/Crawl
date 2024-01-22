@@ -1,6 +1,7 @@
 ﻿using FastMember;
 using Newtonsoft.Json;
 using RestSharp;
+using ScrapySharp.Network;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SQLite;
@@ -15,16 +16,7 @@ namespace Utils
 {
     public static class ExtensionMethod
     {
-        private static RestClient _client = new RestClient(new RestClientOptions()
-        {
-            Proxy = new WebProxy()
-            {
-                Address = new Uri("http://proxy.zenrows.com:8001"),
-                Credentials = new NetworkCredential("2e71a878b4001dab17981e09f064683dbd1519c1", "")
-            },
-            RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true
-        });
-
+        private static ScrapingBrowser _browser = new ScrapingBrowser();
         public static string CheckNull(this string val)
         {
             if (string.IsNullOrWhiteSpace(val))
@@ -175,8 +167,8 @@ namespace Utils
         {
             try
             {
-                var response = _client.Get(new RestRequest(url));
-                return response.Content;
+                var webpage = _browser.NavigateToPage(new Uri(url));
+                return webpage.Content;
             }
             catch (Exception ex)
             {
