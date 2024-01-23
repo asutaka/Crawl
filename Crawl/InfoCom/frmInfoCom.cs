@@ -24,7 +24,8 @@ namespace Crawl.InfoCom
         private bool _changeSelect = false;
         private bool _modeSelect = false;
         private ScheduleMember _RealTimeJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlRealTimeJob>(), "0/30 * * * * ?", nameof(InfoCom_CrawlRealTimeJob));
-        private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlPrevJob>(), "30 0/5 * * * ?", nameof(InfoCom_CrawlPrevJob));
+        private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlPrevJob>(), "0/30 * * * * ?", nameof(InfoCom_CrawlPrevJob));
+        //private ScheduleMember _PrevJob = new ScheduleMember(ScheduleMng.Instance().GetScheduler(), JobBuilder.Create<InfoCom_CrawlPrevJob>(), "30 0/5 * * * ?", nameof(InfoCom_CrawlPrevJob));
         public frmInfoCom()
         {
             InitializeComponent();
@@ -35,8 +36,8 @@ namespace Crawl.InfoCom
             LoadJsonFile();
             LoadComboBox();
             ReloadData();
-            ScheduleMng.Instance().AddSchedule(_RealTimeJob);
-            //ScheduleMng.Instance().AddSchedule(_PrevJob);
+            //ScheduleMng.Instance().AddSchedule(_RealTimeJob);
+            ScheduleMng.Instance().AddSchedule(_PrevJob);
             ScheduleMng.Instance().StartAllJob();
         }
 

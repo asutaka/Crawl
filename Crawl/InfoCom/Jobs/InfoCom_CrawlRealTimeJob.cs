@@ -4,6 +4,7 @@ using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Utils;
 
 namespace Crawl.InfoCom.Jobs
@@ -82,6 +83,7 @@ namespace Crawl.InfoCom.Jobs
                             LinkWeb = item
                         };
 
+                        Thread.Sleep(3000);
                         var doc = new HtmlDocument();
                         var html = item.GetHtml();
                         if (string.IsNullOrWhiteSpace(html))

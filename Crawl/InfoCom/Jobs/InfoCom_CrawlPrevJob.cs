@@ -1,7 +1,7 @@
-﻿using Crawl.Model;
+﻿using Crawl.InfoCom.ChildModel;
 using Quartz;
+using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Utils;
 
 namespace Crawl.InfoCom.Jobs
@@ -11,20 +11,47 @@ namespace Crawl.InfoCom.Jobs
     {
         public void Execute(IJobExecutionContext context)
         {
-            var val = StaticVal._config.TinhThanhInfoCom;
-            if (string.IsNullOrWhiteSpace(val))
-                return;
-            var query = "SELECT * FROM PageTbl";
-            var entityPage = SqliteMng.Get<PageDTO>(query)?.FirstOrDefault();
-            var pageIndex = entityPage.PageNum;
-
-            var arrSplit = val.Split(',');
-            foreach (var item in arrSplit)
+            var lTinhThanhComplete = "complete.json".LoadJsonFile<List<TinhThanhDTO>>();
+            if(lTinhThanhComplete is null)
             {
-                InfoCom_CrawlRealTimeJob.Handle($"https://infocom.vn/{item.Trim()}?page={pageIndex}");
-                Thread.Sleep(5000);
+                lTinhThanhComplete = new List<TinhThanhDTO>();
             }
-            SqliteMng.Update($"update PageTbl set pagenum = {entityPage.PageNum + 1}");
+
+            var entityTinhThanhCrawl = lTinhThanhComplete.FirstOrDefault(x => x.Page > 0);
+            if(entityTinhThanhCrawl is null)
+            {
+                var lCrawl = new TinhThanhModel().lData.Where(x => !lTinhThanhComplete.Any(y => y.TenTinhThanh == x.TenTinhThanh));
+                if (!lCrawl.Any())//Đã crawl hết
+                {
+                    //set tất cả các page của các tỉnh = 5;
+                    foreach (var item in lTinhThanhComplete)
+                    {
+                        item.Page = 5;
+                    }
+                    lTinhThanhComplete.UpdateJsonFile("complete.json");
+                    return;
+                }
+
+                var entityTinhThanh = lCrawl.First();
+                lTinhThanhComplete.Add(new TinhThanhDTO
+                {
+                    TenTinhThanh = entityTinhThanh.TenTinhThanh,
+                    MaMap = entityTinhThanh.MaMap,
+                    Page = entityTinhThanh.Page
+                });
+                lTinhThanhComplete.UpdateJsonFile("complete.json");
+
+                return;
+            }
+
+            lTinhThanhComplete.Remove(entityTinhThanhCrawl);
+            lTinhThanhComplete.Add(new TinhThanhDTO { 
+                TenTinhThanh = entityTinhThanhCrawl.TenTinhThanh,
+                MaMap = entityTinhThanhCrawl.MaMap,
+                Page = entityTinhThanhCrawl.Page - 1
+            });
+            lTinhThanhComplete.UpdateJsonFile("complete.json");
+            InfoCom_CrawlRealTimeJob.Handle($"https://infocom.vn/{entityTinhThanhCrawl.MaMap}?page={entityTinhThanhCrawl.Page}");
         }
     }
 }
